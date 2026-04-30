@@ -10,10 +10,18 @@ body,
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: "Segoe UI", Inter, system-ui, sans-serif;
   background-color: #ffffff;
   color: #111827;
+  overflow-x: hidden;
+  font-size: clamp(0.875rem, 0.35vw + 0.78rem, 1rem);
 }
 
 html.dark body {
@@ -27,6 +35,168 @@ html.dark body {
   width: 100%;
   min-height: 320px;
   display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: clamp(0.75rem, 1.35vw, 1.75rem);
+}
+
+.responsive-stack {
+  display: grid;
+  gap: clamp(0.875rem, 1.1vw, 1.5rem);
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.financial-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.dashboard-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(min(100%, 20rem), 0.9fr);
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.dashboard-chart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(min(100%, 22rem), 1fr);
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.dashboard-three-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.dashboard-split-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(min(100%, 22rem), 1fr);
+  gap: clamp(0.875rem, 1.15vw, 1.5rem);
+}
+
+.fluid-card {
+  width: 100%;
+  min-width: 0;
+  border-radius: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+.fluid-title {
+  font-size: clamp(2rem, 2.3vw + 1rem, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.fluid-section-title {
+  font-size: clamp(1rem, 0.45vw + 0.9rem, 1.25rem);
+  line-height: 1.25;
+}
+
+.fluid-body {
+  font-size: clamp(0.875rem, 0.35vw + 0.78rem, 1rem);
+  line-height: 1.65;
+}
+
+.fluid-caption {
+  font-size: clamp(0.7rem, 0.2vw + 0.66rem, 0.8rem);
+}
+
+.wrap-anywhere {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.responsive-chart {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+}
+
+.responsive-chart-inner {
+  width: 100%;
+  min-width: 320px;
+  height: clamp(18rem, 23vw, 22rem);
+}
+
+.header-desktop-nav {
+  display: flex;
+}
+
+.header-menu-button {
+  display: none;
+}
+
+@media (max-width: 1700px) {
+  .header-desktop-nav {
+    display: none;
+  }
+
+  .header-menu-button {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 1280px) {
+  .dashboard-hero-grid,
+  .dashboard-chart-grid,
+  .dashboard-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: clamp(0.75rem, 3.5vw, 1rem);
+  }
+
+  .responsive-grid,
+  .financial-card-grid,
+  .dashboard-hero-grid,
+  .dashboard-chart-grid,
+  .dashboard-three-grid,
+  .dashboard-split-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .custom-scrollbar {

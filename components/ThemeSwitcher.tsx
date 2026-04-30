@@ -38,13 +38,13 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ theme, onSetTheme }) => {
         <div className="relative" ref={wrapperRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-white bg-gray-200 dark:bg-brand-primary hover:bg-gray-300 dark:hover:bg-gray-800 p-2 rounded-lg"
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gray-200 text-sm font-semibold text-gray-700 transition hover:bg-gray-300 dark:bg-brand-primary dark:text-white dark:hover:bg-gray-800"
                 aria-label={`Current theme: ${theme}. Change theme.`}
             >
                 <CurrentThemeIcon className="w-5 h-5" />
             </button>
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-brand-secondary rounded-lg shadow-2xl z-40 border border-gray-200 dark:border-gray-700">
+                <div className="absolute right-0 z-40 mt-2 w-40 rounded-lg border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-brand-secondary">
                     <div className="p-1">
                         {themeOptions.map(option => (
                              <button

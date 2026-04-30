@@ -142,22 +142,22 @@ const CashFlowForecastChart: React.FC<CashFlowForecastChartProps> = ({ transacti
     const lastHistoricalMonth = historicalData[historicalData.length - 1]?.month;
 
     return (
-        <section className="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-brand-secondary sm:p-6">
+        <section className="fluid-card border border-gray-200 bg-white p-[clamp(1rem,1.35vw,1.5rem)] shadow-sm dark:border-gray-700 dark:bg-brand-secondary">
             <header className="flex flex-col gap-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
+                    <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.forecast.title')}</h3>
-                            <span className="rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
+                            <h3 className="fluid-section-title wrap-anywhere font-semibold text-gray-900 dark:text-white">{t('dashboard.forecast.title')}</h3>
+                            <span className="wrap-anywhere rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
                                 {t('dashboard.forecast.aiBadge')}
                             </span>
                         </div>
-                        <p className="mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.forecast.subtitle')}</p>
+                        <p className="wrap-anywhere mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.forecast.subtitle')}</p>
                     </div>
                     <button
                         onClick={handleGenerateForecast}
                         disabled={isLoading}
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex min-h-11 max-w-full flex-wrap items-center justify-center gap-2 rounded-2xl bg-brand-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {isLoading ? (
                             <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-b-white" />
@@ -186,9 +186,10 @@ const CashFlowForecastChart: React.FC<CashFlowForecastChartProps> = ({ transacti
                 </div>
             )}
 
-            <div className="mt-6 h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 10, right: 12, left: 0, bottom: 8 }}>
+            <div className="responsive-chart mt-6">
+                <div className="responsive-chart-inner">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={chartData} margin={{ top: 10, right: 12, left: 0, bottom: 8 }}>
                         <defs>
                             <linearGradient id="historicalForecastFill" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.24} />
@@ -241,8 +242,9 @@ const CashFlowForecastChart: React.FC<CashFlowForecastChartProps> = ({ transacti
                                     : { ...point, forecastAmount: null }
                             ))}
                         />
-                    </AreaChart>
-                </ResponsiveContainer>
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
         </section>
     );

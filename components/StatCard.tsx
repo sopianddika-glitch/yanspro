@@ -64,17 +64,17 @@ const StatCard: React.FC<StatCardProps> = ({
     }[resolvedTone];
 
     return (
-        <article className={`relative overflow-hidden rounded-3xl border bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-brand-secondary ${toneStyles.border}`}>
+        <article className={`fluid-card relative min-h-[clamp(8.25rem,9vw,10rem)] overflow-hidden border bg-white p-[clamp(1rem,1.3vw,1.5rem)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-brand-secondary ${toneStyles.border}`}>
             <div className={`pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${toneStyles.accent}`} />
-            <div className="relative flex items-start gap-4">
-                <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${toneStyles.icon}`}>
+            <div className="relative flex min-w-0 flex-wrap items-start gap-[clamp(0.75rem,1vw,1rem)]">
+                <div className={`flex h-[clamp(2.75rem,3.4vw,3.5rem)] w-[clamp(2.75rem,3.4vw,3.5rem)] flex-shrink-0 items-center justify-center rounded-2xl ${toneStyles.icon}`}>
                     {icon}
                 </div>
                 <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-500 dark:text-brand-muted">{title}</p>
-                    <p className={`mt-2 text-2xl font-bold sm:text-[1.75rem] ${toneStyles.value}`}>{formattedValue}</p>
+                    <p className="wrap-anywhere text-[clamp(0.875rem,0.32vw+0.78rem,1rem)] font-medium text-gray-500 dark:text-brand-muted">{title}</p>
+                    <p className={`wrap-anywhere mt-2 text-[clamp(1.55rem,1.2vw+1.15rem,2.25rem)] font-bold leading-tight ${toneStyles.value}`}>{formattedValue}</p>
                     {description && (
-                        <p className="mt-2 text-sm text-gray-500 dark:text-brand-muted">{description}</p>
+                        <p className="wrap-anywhere mt-2 text-[clamp(0.82rem,0.28vw+0.75rem,0.95rem)] leading-relaxed text-gray-500 dark:text-brand-muted">{description}</p>
                     )}
                 </div>
             </div>

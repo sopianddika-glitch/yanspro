@@ -61,15 +61,15 @@ const OverviewChart: React.FC<OverviewChartProps> = ({ transactions, theme, curr
         return [...monthlyMap.values()].sort((a, b) => a.monthKey.localeCompare(b.monthKey));
     }, [monthFormatter, transactions]);
 
-    const cardClasses = 'rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-brand-secondary sm:p-6';
+    const cardClasses = 'fluid-card border border-gray-200 bg-white p-[clamp(1rem,1.35vw,1.5rem)] shadow-sm dark:border-gray-700 dark:bg-brand-secondary';
 
     if (data.length === 0) {
         return (
             <section className={cardClasses}>
-                <header className="flex items-start justify-between gap-4">
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.overviewChart.title')}</h3>
-                        <p className="mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.overviewChart.emptyDescription')}</p>
+                <header className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="min-w-0">
+                        <h3 className="fluid-section-title wrap-anywhere font-semibold text-gray-900 dark:text-white">{t('dashboard.overviewChart.title')}</h3>
+                        <p className="wrap-anywhere mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.overviewChart.emptyDescription')}</p>
                     </div>
                 </header>
                 <div className="mt-10 flex min-h-[280px] flex-col items-center justify-center rounded-3xl border border-dashed border-gray-200 bg-gray-50/80 text-center dark:border-gray-700 dark:bg-brand-primary/40">
@@ -83,9 +83,9 @@ const OverviewChart: React.FC<OverviewChartProps> = ({ transactions, theme, curr
     return (
         <section className={cardClasses}>
             <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.overviewChart.title')}</h3>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.overviewChart.subtitle')}</p>
+                <div className="min-w-0">
+                    <h3 className="fluid-section-title wrap-anywhere font-semibold text-gray-900 dark:text-white">{t('dashboard.overviewChart.title')}</h3>
+                    <p className="wrap-anywhere mt-1 text-sm text-gray-500 dark:text-brand-muted">{t('dashboard.overviewChart.subtitle')}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs font-semibold">
                     <span className="inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-green-700 dark:bg-green-500/15 dark:text-green-300">
@@ -99,9 +99,10 @@ const OverviewChart: React.FC<OverviewChartProps> = ({ transactions, theme, curr
                 </div>
             </header>
 
-            <div className="mt-6 h-[320px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 8 }}>
+            <div className="responsive-chart mt-6">
+                <div className="responsive-chart-inner">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 8 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#E5E7EB'} vertical={false} />
                         <XAxis
                             dataKey="name"
@@ -145,8 +146,9 @@ const OverviewChart: React.FC<OverviewChartProps> = ({ transactions, theme, curr
                             radius={[12, 12, 0, 0]}
                             maxBarSize={42}
                         />
-                    </BarChart>
-                </ResponsiveContainer>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
         </section>
     );

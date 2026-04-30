@@ -135,41 +135,25 @@ const Dashboard: React.FC<DashboardProps> = ({
 
     return (
         <div className="min-h-full bg-gray-50 dark:bg-brand-primary">
-            <style>{`
-                @keyframes slide-in-up {
-                    from {
-                        transform: translateY(18px);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-                }
-                .animate-slide-in-up {
-                    animation: slide-in-up 0.45s ease-out forwards;
-                }
-            `}</style>
-
-            <div className="mx-auto flex max-w-[1600px] flex-col gap-6 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
-                <header className="grid gap-4 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,0.9fr)]">
-                    <section className="overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-brand-secondary">
-                        <div className="bg-gradient-to-r from-brand-accent/10 via-white to-green-50/70 p-6 dark:from-brand-accent/10 dark:via-brand-secondary dark:to-brand-primary/70 sm:p-8">
-                            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-brand-accent">{t('header.overview')}</p>
-                            <h1 className="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+            <div className="app-container responsive-stack">
+                <header className="dashboard-hero-grid">
+                    <section className="fluid-card overflow-hidden border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-brand-secondary">
+                        <div className="bg-gradient-to-r from-brand-accent/10 via-white to-green-50/70 p-[clamp(1.25rem,2.1vw,2rem)] dark:from-brand-accent/10 dark:via-brand-secondary dark:to-brand-primary/70">
+                            <p className="fluid-caption wrap-anywhere font-semibold uppercase tracking-[0.24em] text-brand-accent">{t('header.overview')}</p>
+                            <h1 className="fluid-title mt-3 font-bold text-gray-900 dark:text-white">
                                 {t('dashboard.title')}
                             </h1>
-                            <p className="mt-4 max-w-3xl text-sm leading-7 text-gray-600 dark:text-brand-muted sm:text-base">
+                            <p className="fluid-body wrap-anywhere mt-4 max-w-3xl text-gray-600 dark:text-brand-muted">
                                 {t('dashboard.subtitle', { businessName: activeProfile.name })}
                             </p>
                         </div>
                     </section>
 
-                    <aside className="rounded-[2rem] border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-brand-secondary sm:p-6">
-                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gray-400 dark:text-brand-muted">
+                    <aside className="fluid-card border border-gray-200 bg-white p-[clamp(1rem,1.5vw,1.5rem)] shadow-sm dark:border-gray-700 dark:bg-brand-secondary">
+                        <p className="fluid-caption wrap-anywhere font-semibold uppercase tracking-[0.24em] text-gray-400 dark:text-brand-muted">
                             {t('dashboard.quickActions')}
                         </p>
-                        <h2 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">{activeProfile.name}</h2>
+                        <h2 className="fluid-section-title wrap-anywhere mt-2 font-semibold text-gray-900 dark:text-white">{activeProfile.name}</h2>
                         <div className="mt-3 flex flex-wrap gap-2">
                             <span className="inline-flex rounded-full bg-brand-accent/10 px-3 py-1 text-xs font-semibold text-brand-accent dark:bg-brand-accent/20">
                                 {activeProfile.currency}
@@ -178,32 +162,31 @@ const Dashboard: React.FC<DashboardProps> = ({
                                 {t('header.workspaceLabel')}
                             </span>
                         </div>
-                        <div className="mt-5 grid gap-3">
+                        <div className="mt-5 flex flex-wrap gap-3">
                             <button
                                 onClick={onAddFromReceiptClick}
-                                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gray-200 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+                                className="inline-flex min-h-12 min-w-[min(100%,13rem)] flex-1 items-center justify-center gap-2 rounded-2xl bg-gray-200 px-4 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                             >
-                                <CameraIcon className="h-5 w-5" />
-                                <span>{t('dashboard.addFromReceipt')}</span>
+                                <CameraIcon className="h-5 w-5 flex-shrink-0" />
+                                <span className="wrap-anywhere">{t('dashboard.addFromReceipt')}</span>
                             </button>
                             <button
                                 onClick={onAddTransactionClick}
-                                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-accent px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-600"
+                                className="inline-flex min-h-12 min-w-[min(100%,13rem)] flex-1 items-center justify-center gap-2 rounded-2xl bg-brand-accent px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-600"
                             >
-                                <AddIcon className="h-5 w-5" />
-                                <span>{t('dashboard.addTransaction')}</span>
+                                <AddIcon className="h-5 w-5 flex-shrink-0" />
+                                <span className="wrap-anywhere">{t('dashboard.addTransaction')}</span>
                             </button>
                         </div>
                     </aside>
                 </header>
 
                 <section aria-label={t('dashboard.title')}>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                        {statCards.map((card, index) => (
+                    <div className="financial-card-grid">
+                        {statCards.map((card) => (
                             <div
                                 key={card.title}
-                                className="animate-slide-in-up"
-                                style={{ animationDelay: `${index * 80}ms`, opacity: 0 }}
+                                className="min-w-0"
                             >
                                 <StatCard {...card} />
                             </div>
@@ -211,12 +194,12 @@ const Dashboard: React.FC<DashboardProps> = ({
                     </div>
                 </section>
 
-                <section className="grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(340px,1fr)]">
+                <section className="dashboard-chart-grid">
                     <OverviewChart transactions={transactions} theme={theme} currency={activeProfile.currency} />
                     <CashFlowForecastChart transactions={transactions} theme={theme} currency={activeProfile.currency} />
                 </section>
 
-                <section className="grid gap-6 xl:grid-cols-3">
+                <section className="dashboard-three-grid">
                     <UpcomingInvoices
                         invoices={invoices}
                         currency={activeProfile.currency}
@@ -238,7 +221,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     />
                 </section>
 
-                <section className="grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
+                <section className="dashboard-split-grid">
                     <RecentTransactions transactions={transactions} currency={activeProfile.currency} />
                     <div className="grid gap-6">
                         <FinancialInsight transactions={transactions} summary={summary} />

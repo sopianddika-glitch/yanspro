@@ -50,23 +50,23 @@ const ProfileSwitcher: React.FC<ProfileSwitcherProps> = ({ activeProfile, profil
                 onClick={() => setIsOpen(!isOpen)}
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
-                className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white/90 px-3 py-2 text-left shadow-sm transition hover:border-gray-300 hover:bg-white dark:border-gray-700 dark:bg-brand-primary/90 dark:hover:border-gray-600 dark:hover:bg-brand-primary"
+                className="flex max-w-[min(18rem,46vw)] items-center gap-2 rounded-2xl border border-gray-200 bg-white/90 px-2.5 py-2 text-left shadow-sm transition hover:border-gray-300 hover:bg-white dark:border-gray-700 dark:bg-brand-primary/90 dark:hover:border-gray-600 dark:hover:bg-brand-primary sm:gap-3 sm:px-3"
             >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-accent/10 text-sm font-bold text-brand-accent dark:bg-brand-accent/20">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-accent/10 text-sm font-bold text-brand-accent dark:bg-brand-accent/20">
                     {initials}
                 </div>
-                <div className="hidden min-w-0 md:block">
-                    <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-gray-400 dark:text-brand-muted">
+                <div className="hidden min-w-0 lg:block">
+                    <p className="truncate text-[10px] font-medium uppercase tracking-[0.18em] text-gray-400 dark:text-brand-muted">
                         {t('header.workspaceLabel')}
                     </p>
                     <p className="truncate text-sm font-semibold text-gray-800 dark:text-white">{activeProfile.name}</p>
                 </div>
-                <div className="rounded-full bg-gray-100 p-1 text-gray-500 dark:bg-gray-800 dark:text-gray-300">
+                <div className="flex-shrink-0 rounded-full bg-gray-100 p-1 text-gray-500 dark:bg-gray-800 dark:text-gray-300">
                     <ChevronDownIcon className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </div>
             </button>
             {isOpen && (
-                <div className="absolute right-0 z-40 mt-3 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-brand-secondary">
+                <div className="absolute right-0 z-40 mt-3 w-[min(18rem,calc(100vw-1rem))] overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-brand-secondary">
                     <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-700">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gray-400 dark:text-brand-muted">
                             {t('header.switchProfile')}
