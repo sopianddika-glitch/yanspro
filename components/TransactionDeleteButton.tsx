@@ -31,8 +31,8 @@ const TransactionDeleteButton: React.FC<TransactionDeleteButtonProps> = ({
         setIsDeleting(true);
         try {
             await onDelete(transactionId);
-        } catch (error) {
-            console.error("Failed to delete transaction", error);
+        } catch {
+            setIsConfirmOpen(false);
         } finally {
             setIsDeleting(false);
             setIsConfirmOpen(false);

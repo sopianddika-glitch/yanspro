@@ -7,6 +7,18 @@ export default defineConfig({
   // Allow production builds to target a GitHub Pages project path.
   base: basePath,
   plugins: [react()],
+  build: {
+    chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          charts: ['recharts'],
+          scanner: ['html5-qrcode'],
+        },
+      },
+    },
+  },
   server: {
     host: 'localhost',   // paksa host
     port: 5173,          // paksa port Vite dev server

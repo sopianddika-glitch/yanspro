@@ -234,7 +234,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                 </div>
             </div>
 
-            {/* --- LEFT PANEL: CART (Sidebar on Desktop, Drawer on Mobile) --- */}
+            {/* --- LEFT PANEL: CART (Drawer on Mobile) --- */}
             <div className={`
                 fixed inset-0 z-40 bg-white dark:bg-brand-secondary flex flex-col
                 transition-transform duration-300 ease-in-out

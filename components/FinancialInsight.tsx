@@ -36,7 +36,6 @@ const FinancialInsight: React.FC<FinancialInsightProps> = ({ transactions, summa
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : t('general.error.unknown');
       setError(t('ai.error', { error: errorMessage }));
-      console.error(err);
     } finally {
       setIsLoading(false);
     }

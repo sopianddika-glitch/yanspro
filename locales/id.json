@@ -1,4 +1,3 @@
-
 {
   "appName": "Yans Pro",
   "general": {
@@ -30,28 +29,12 @@
       "positiveAmount": "Harap masukkan jumlah yang valid dan positif."
     }
   },
-  "sidebar": {
-    "dashboard": "Dasbor",
-    "pos": "Kasir",
-    "transactions": "Transaksi",
-    "invoices": "Faktur",
-    "investments": "Investasi",
-    "products": "Produk",
-    "budgets": "Anggaran",
-    "goals": "Target",
-    "reports": "Laporan",
-    "settings": "Pengaturan",
-    "navigation": "Navigasi utama",
-    "expand": "Perluas sidebar",
-    "collapse": "Ciutkan sidebar"
-  },
   "header": {
     "manageProfiles": "Kelola Profil",
     "switchProfile": "Ganti profil bisnis",
     "workspaceLabel": "Profil bisnis",
     "ownerLabel": "Pemilik workspace",
-    "overview": "Ikhtisar keuangan",
-    "openSidebar": "Buka menu navigasi"
+    "overview": "Ikhtisar keuangan"
   },
   "dashboard": {
     "title": "Dasbor",
@@ -483,70 +466,17 @@
       "step3_android": "Ikuti petunjuk di layar untuk menambahkan aplikasi ke layar utama Anda."
     },
     "import": {
-        "title": "Impor Transaksi dari CSV",
-        "instructionsTitle": "Cara Memformat CSV Anda",
-        "instructionsBody": "File CSV Anda harus memiliki baris header dengan kolom berikut: date, description, amount, type, category. Kolom 'type' harus berisi 'Income' atau 'Expense'.",
-        "selectFile": "Pilih File CSV",
-        "preview": "Pratinjau Impor ({count} transaksi ditemukan)",
-        "confirm": "Impor {count} Transaksi",
-        "errorHeaders": "File CSV tidak memiliki header yang diperlukan: date, description, amount, type, category.",
-        "errorAmount": "Jumlah tidak valid di baris {line}. Harap berikan angka yang valid.",
-        "errorType": "Jenis tidak valid di baris {line}. Harus 'Income' atau 'Expense'.",
-        "errorDate": "Format tanggal tidak valid di baris {line}. Harap gunakan YYYY-MM-DD."
-    },
-    "addInvestment": {
-        "title": "Tambah Investasi",
-        "searchLabel": "Cari Aset (Didukung AI)",
-        "searchPlaceholder": "cth., Apple, Bitcoin...",
-        "searching": "Mencari data pasar...",
-        "noResults": "Aset tidak ditemukan.",
-        "symbol": "Simbol Aset (cth., AAPL, BTC)",
-        "name": "Nama Aset",
-        "quantity": "Jumlah Dimiliki",
-        "avgPrice": "Rata-rata Harga Beli",
-        "type": "Jenis Aset",
-        "add": "Tambah Aset"
-    },
-    "manageInvestment": {
-      "title": "Kelola {symbol}",
-      "buy": "Beli",
-      "sell": "Jual",
-      "rebalance": "Seimbangkan",
-      "targetAllocation": "Target Alokasi",
-      "availableCash": "Daya Beli",
-      "currentPrice": "Harga Saat Ini",
-      "estCost": "Est. Biaya",
-      "proceeds": "Est. Hasil",
-      "insufficientFunds": "Dana tidak mencukupi di dompet.",
-      "insufficientQty": "Jumlah tidak mencukupi untuk dijual.",
-      "currentAlloc": "Alokasi Saat Ini",
-      "deviation": "Deviasi",
-      "actionRequired": "Tindakan Diperlukan",
-      "buyMore": "Beli {qty} {symbol}",
-      "sellSome": "Jual {qty} {symbol}",
-      "onTrack": "Sesuai Target",
-      "saveTarget": "Simpan Target %"
+      "title": "Impor Transaksi dari CSV",
+      "instructionsTitle": "Cara Memformat CSV Anda",
+      "instructionsBody": "File CSV Anda harus memiliki baris header dengan kolom berikut: date, description, amount, type, category. Kolom 'type' harus berisi 'Income' atau 'Expense'.",
+      "selectFile": "Pilih File CSV",
+      "preview": "Pratinjau Impor ({count} transaksi ditemukan)",
+      "confirm": "Impor {count} Transaksi",
+      "errorHeaders": "File CSV tidak memiliki header yang diperlukan: date, description, amount, type, category.",
+      "errorAmount": "Jumlah tidak valid di baris {line}. Harap berikan angka yang valid.",
+      "errorType": "Jenis tidak valid di baris {line}. Harus 'Income' atau 'Expense'.",
+      "errorDate": "Format tanggal tidak valid di baris {line}. Harap gunakan YYYY-MM-DD."
     }
-  },
-  "manageInvestment": {
-    "title": "Kelola {symbol}",
-    "buy": "Beli",
-    "sell": "Jual",
-    "rebalance": "Seimbangkan",
-    "targetAllocation": "Target Alokasi",
-    "availableCash": "Daya Beli",
-    "currentPrice": "Harga Saat Ini",
-    "estCost": "Estimasi Biaya",
-    "proceeds": "Estimasi Hasil",
-    "insufficientFunds": "Dana tidak mencukupi di dompet.",
-    "insufficientQty": "Jumlah tidak mencukupi untuk dijual.",
-    "currentAlloc": "Alokasi Saat Ini",
-    "deviation": "Deviasi",
-    "actionRequired": "Tindakan Diperlukan",
-    "buyMore": "Beli {qty} {symbol}",
-    "sellSome": "Jual {qty} {symbol}",
-    "onTrack": "Sesuai Target",
-    "saveTarget": "Simpan Target %"
   },
   "enterprise": {
     "menu": "Command Center",
@@ -578,42 +508,11 @@
       "generate": "Buat Laporan CFO"
     }
   },
-  "portfolioAdvisor": {
-    "title": "Penasihat Portofolio AI",
-    "subtitle": "Dapatkan saran real-time berdasarkan kepemilikan Anda dan tren pasar.",
-    "getAdvice": "Dapatkan Saran AI",
-    "analyzing": "Menganalisis Portofolio...",
-    "noSuggestions": "Belum ada saran yang tersedia. Coba segarkan setelah data pasar diperbarui.",
-    "symbol": "Simbol",
-    "action": "Aksi",
-    "reasoning": "Analisis",
-    "risk": "Risiko",
-    "targetPrice": "Harga Target",
-    "sources": "Sumber",
-    "disclaimer": "Konten AI ini hanya untuk informasi umum dan bukan nasihat keuangan.",
-    "buy": "BELI",
-    "sell": "JUAL",
-    "hold": "TAHAN",
-    "rebalance": "SEIMBANGKAN"
-  },
-  "sap2025": {
-    "title": "STRUKTUR INTI PORTOFOLIO — SAP 2025",
-    "subtitle": "Strategi Portofolio Cerdas Adaptif",
-    "core": "INTI (CORE)",
-    "satellite": "SATELIT (SATELLITE)",
-    "defensive": "MITIGASI (DEFENSIVE)",
-    "coreDesc": "Pertumbuhan stabil jangka panjang (Saham, Reksa Dana)",
-    "satelliteDesc": "Pertumbuhan tinggi & spekulasi (Kripto)",
-    "defensiveDesc": "Keamanan & pelestarian modal (Obligasi, Tunai)",
-    "current": "Saat Ini",
-    "target": "Target",
-    "status": "Status Portofolio"
-  },
   "components": {
-      "scanner": {
-          "title": "Pindai Barcode",
-          "instruction": "Arahkan kamera Anda ke barcode untuk memindainya."
-      }
+    "scanner": {
+      "title": "Pindai Barcode",
+      "instruction": "Arahkan kamera Anda ke barcode untuk memindainya."
+    }
   },
   "ai": {
     "financialInsight": "Wawasan Keuangan AI",
@@ -630,9 +529,9 @@
       "error": "Maaf, saya mengalami masalah: {error}"
     },
     "suggestedQueries": {
-        "summary": "Ringkas kondisi keuangan saya",
-        "spending": "Di mana pengeluaran terbesar saya?",
-        "improvement": "Sarankan satu area untuk perbaikan"
+      "summary": "Ringkas kondisi keuangan saya",
+      "spending": "Di mana pengeluaran terbesar saya?",
+      "improvement": "Sarankan satu area untuk perbaikan"
     }
   },
   "invoice": {
@@ -641,69 +540,16 @@
     "overdueBy": "Terlambat {days} hari",
     "getReminder": "Dapatkan Pengingat AI"
   },
-  "investmentsPage": {
-      "title": "Ringkasan Investasi",
-      "subtitle": "Pantau performa portofolio, alokasi kas, dan pergerakan pasar dari satu halaman yang rapi.",
-      "refresh": "Perbarui Data Pasar",
-      "refreshing": "Memperbarui...",
-      "add": "Tambah Investasi",
-      "wallet": "Dompet Tunai Portofolio",
-      "deposit": "Setor",
-      "withdraw": "Tarik",
-      "buyingPower": "Daya Beli",
-      "manage": "Kelola Posisi",
-      "chartTitle": "Performa Investasi",
-      "chartSubtitle": "Bandingkan modal awal dengan nilai pasar terkini untuk aset aktif Anda.",
-      "allocationTitle": "Alokasi Portofolio",
-      "allocationSubtitle": "Lihat sebaran portofolio Anda di tiap aset.",
-      "holdingsTitle": "Kepemilikan Portofolio",
-      "detailsTitle": "Ringkasan Portofolio",
-      "emptyTitle": "Belum ada investasi",
-      "emptyDescription": "Tambahkan investasi pertama Anda untuk mulai melacak performa dan alokasi portofolio.",
-      "noChartData": "Tambahkan setidaknya satu investasi aktif agar grafik performa dapat ditampilkan.",
-      "noAllocationData": "Rincian alokasi akan muncul setelah Anda menambahkan aset aktif.",
-      "prompts": {
-          "deposit": "Jumlah yang ingin disetor:",
-          "withdraw": "Jumlah yang ingin ditarik:",
-          "insufficientFunds": "Dana di dompet tidak mencukupi."
-      },
-      "totalFunds": {
-        "title": "Total Dana Perusahaan",
-        "operating": "Saldo Operasional",
-        "portfolio": "Nilai Portofolio"
-      },
-      "stats": {
-          "totalInvested": "Total Diinvestasikan",
-          "totalReturns": "Total Imbal Hasil",
-          "growth": "Tingkat Pertumbuhan",
-          "activeInvestments": "Investasi Aktif"
-      },
-      "recentActivity": {
-          "title": "Aktivitas Investasi Terkini",
-          "empty": "Belum ada pembaruan investasi terbaru.",
-          "buy": "Beli",
-          "sell": "Jual",
-          "updated": "Diperbarui {date}",
-          "amount": "Jumlah"
-      },
-      "table": {
-          "asset": "Aset",
-          "qty": "Jml",
-          "avgPrice": "Harga Rata-rata",
-          "currentPrice": "Harga Saat Ini",
-          "value": "Nilai",
-          "alloc": "Alokasi %",
-          "target": "Target %",
-          "return": "Imbal Hasil",
-          "actions": "Aksi",
-          "deleteConfirm": "Hapus aset ini dari portofolio Anda?",
-          "empty": "Belum ada investasi aktif."
-      },
-      "marketInsights": {
-          "title": "Peluang Pasar AI",
-          "subtitle": "Tren dan rekomendasi real-time yang didukung Google Search",
-          "refresh": "Perbarui Wawasan",
-          "empty": "Sinyal pasar akan muncul di sini setelah rekomendasi tersedia."
-      }
+  "nav": {
+    "dashboard": "Dasbor",
+    "pos": "Kasir",
+    "transactions": "Transaksi",
+    "invoices": "Faktur",
+    "enterprise": "Command Center",
+    "products": "Produk",
+    "budgets": "Anggaran",
+    "goals": "Target",
+    "settings": "Pengaturan",
+    "navigation": "Navigasi utama"
   }
 }

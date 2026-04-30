@@ -43,12 +43,6 @@ export async function getGoalSuggestion(...args: any[]): Promise<any> {
   };
 }
 
-export async function searchAssets(...args: any[]): Promise<any> {
-  // compatibility fallback mock (auto-generated)
-  // TODO: replace with real implementation in services/geminiService.ts
-  return [];
-}
-
 export async function generateCashFlowForecast(...args: any[]): Promise<any> {
   // compatibility fallback mock (auto-generated)
   // TODO: replace with real implementation in services/geminiService.ts
@@ -68,30 +62,6 @@ export async function generateExecutiveSummary(...args: any[]): Promise<any> {
     ok: false,
     name: 'generateExecutiveSummary',
     note: 'Development fallback: implement generateExecutiveSummary in services/geminiService.ts'
-  };
-}
-
-export async function getPortfolioMarketData(...args: any[]): Promise<any> {
-  // compatibility fallback mock (auto-generated)
-  // TODO: replace with real implementation in services/geminiService.ts
-  return {};
-}
-
-export async function getMarketRecommendations(...args: any[]): Promise<any> {
-  // compatibility fallback mock (auto-generated)
-  // TODO: replace with real implementation in services/geminiService.ts
-  return {
-    recommendations: [],
-    sources: []
-  };
-}
-
-export async function getAiPortfolioAnalysis(...args: any[]): Promise<any> {
-  // compatibility fallback mock (auto-generated)
-  // TODO: replace with real implementation in services/geminiService.ts
-  return {
-    suggestions: [],
-    sources: []
   };
 }
 

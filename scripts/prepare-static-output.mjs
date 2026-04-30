@@ -26,5 +26,3 @@ if (!existsSync(indexPath)) {
 
 writeFileSync(notFoundPath, readFileSync(indexPath, 'utf8'));
 writeFileSync(noJekyllPath, '');
-
-console.log(`Prepared static output in ${targetDir}`);

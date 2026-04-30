@@ -28,10 +28,9 @@ const ReceiptScannerModal: React.FC<ReceiptScannerModalProps> = ({ isOpen, onClo
                         // Permission granted. Stop the stream as we don't need to display it.
                         stream.getTracks().forEach(track => track.stop());
                     })
-                    .catch(err => {
+                    .catch(() => {
                         // User likely denied permission. We won't show an error,
                         // as they can still upload a file from their system.
-                        console.warn('Camera permission was not granted:', err.message);
                     });
             }
         }

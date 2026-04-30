@@ -97,7 +97,7 @@ const BudgetDashboardWidget: React.FC<BudgetDashboardWidgetProps> = ({ budgets, 
                 <button
                     onClick={() => onNavigate('budgets')}
                     className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gray-200 text-gray-700 transition hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
-                    aria-label={t('sidebar.budgets')}
+                    aria-label={t('nav.budgets')}
                 >
                     <ChevronRightIcon className="h-5 w-5" />
                 </button>

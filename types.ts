@@ -101,7 +101,7 @@ export interface TransactionGroup {
     total: number;
 }
 
-export type Page = 'dashboard' | 'transactions' | 'reports' | 'settings' | 'budgets' | 'invoices' | 'invoice-editor' | 'goals' | 'products' | 'pos' | 'clients' | 'investments' | 'enterprise';
+export type Page = 'dashboard' | 'transactions' | 'reports' | 'settings' | 'budgets' | 'invoices' | 'invoice-editor' | 'goals' | 'products' | 'pos' | 'clients' | 'enterprise';
 
 export interface ReceiptAnalysisResult {
   vendor: string;
@@ -214,38 +214,7 @@ export interface CashFlowPoint {
     reasoning?: string;
 }
 
-// --- INVESTMENT & ENTERPRISE TYPES ---
-
-export type AssetType = 'Stock' | 'Crypto' | 'Bond' | 'Real Estate' | 'Mutual Fund' | 'Cash';
-
-export interface Investment {
-    id: string;
-    symbol: string; // Ticker or Identifier
-    name: string;
-    quantity: number;
-    avgBuyPrice: number;
-    currentPrice?: number;
-    type: AssetType;
-    targetAllocation?: number; // Desired % of portfolio
-    lastUpdated?: string;
-}
-
-export interface MarketTrendRecommendation {
-    sector: string;
-    sentiment: 'Bullish' | 'Bearish' | 'Neutral';
-    reasoning: string;
-    riskLevel: 'Low' | 'Medium' | 'High';
-    suggestedAction: 'Buy' | 'Hold' | 'Watch';
-}
-
-export interface PortfolioSuggestion {
-    symbol: string;
-    name: string;
-    action: 'Buy' | 'Sell' | 'Hold' | 'Rebalance';
-    reasoning: string;
-    riskLevel: 'Low' | 'Medium' | 'High';
-    targetPrice?: number;
-}
+// --- ENTERPRISE TYPES ---
 
 export interface Anomaly {
     id: string;

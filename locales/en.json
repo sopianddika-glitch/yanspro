@@ -1,4 +1,3 @@
-
 {
   "appName": "Yans Pro",
   "general": {
@@ -30,28 +29,12 @@
       "positiveAmount": "Please enter a valid, positive amount."
     }
   },
-  "sidebar": {
-    "dashboard": "Dashboard",
-    "pos": "Cashier",
-    "transactions": "Transactions",
-    "invoices": "Invoices",
-    "investments": "Investments",
-    "products": "Products",
-    "budgets": "Budgets",
-    "goals": "Goals",
-    "reports": "Reports",
-    "settings": "Settings",
-    "navigation": "Main navigation",
-    "expand": "Expand sidebar",
-    "collapse": "Collapse sidebar"
-  },
   "header": {
     "manageProfiles": "Manage Profiles",
     "switchProfile": "Switch business profile",
     "workspaceLabel": "Business profile",
     "ownerLabel": "Workspace owner",
-    "overview": "Financial overview",
-    "openSidebar": "Open navigation menu"
+    "overview": "Financial overview"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -493,60 +476,7 @@
       "errorAmount": "Invalid amount on line {line}. Please provide a valid number.",
       "errorType": "Invalid type on line {line}. Must be 'Income' or 'Expense'.",
       "errorDate": "Invalid date format on line {line}. Please use YYYY-MM-DD."
-    },
-    "addInvestment": {
-      "title": "Add Investment",
-      "searchLabel": "Search Asset (AI Powered)",
-      "searchPlaceholder": "e.g., Apple, Bitcoin...",
-      "searching": "Searching markets...",
-      "noResults": "No assets found.",
-      "symbol": "Asset Symbol (e.g., AAPL, BTC)",
-      "name": "Asset Name",
-      "quantity": "Quantity Held",
-      "avgPrice": "Average Buy Price",
-      "type": "Asset Type",
-      "add": "Add Asset"
-    },
-    "manageInvestment": {
-      "title": "Manage {symbol}",
-      "buy": "Buy",
-      "sell": "Sell",
-      "rebalance": "Rebalance",
-      "targetAllocation": "Target Allocation",
-      "availableCash": "Buying Power",
-      "currentPrice": "Current Price",
-      "estCost": "Est. Cost",
-      "proceeds": "Est. Proceeds",
-      "insufficientFunds": "Insufficient funds in wallet.",
-      "insufficientQty": "Insufficient quantity to sell.",
-      "currentAlloc": "Current Allocation",
-      "deviation": "Deviation",
-      "actionRequired": "Action Required",
-      "buyMore": "Buy {qty} {symbol}",
-      "sellSome": "Sell {qty} {symbol}",
-      "onTrack": "On Track",
-      "saveTarget": "Save Target %"
     }
-  },
-  "manageInvestment": {
-    "title": "Manage {symbol}",
-    "buy": "Buy",
-    "sell": "Sell",
-    "rebalance": "Rebalance",
-    "targetAllocation": "Target Allocation",
-    "availableCash": "Buying Power",
-    "currentPrice": "Current Price",
-    "estCost": "Est. Cost",
-    "proceeds": "Est. Proceeds",
-    "insufficientFunds": "Insufficient funds in wallet.",
-    "insufficientQty": "Insufficient quantity to sell.",
-    "currentAlloc": "Current Allocation",
-    "deviation": "Deviation",
-    "actionRequired": "Action Required",
-    "buyMore": "Buy {qty} {symbol}",
-    "sellSome": "Sell {qty} {symbol}",
-    "onTrack": "On Track",
-    "saveTarget": "Save Target %"
   },
   "enterprise": {
     "menu": "Command Center",
@@ -577,37 +507,6 @@
       "placeholder": "Click generate to get an AI-powered executive briefing on your company's financial status.",
       "generate": "Generate CFO Report"
     }
-  },
-  "portfolioAdvisor": {
-    "title": "AI Portfolio Advisor",
-    "subtitle": "Get real-time suggestions based on your holdings and market trends.",
-    "getAdvice": "Get AI Advice",
-    "analyzing": "Analyzing Portfolio...",
-    "noSuggestions": "No suggestions available right now. Try refreshing after market data updates.",
-    "symbol": "Symbol",
-    "action": "Action",
-    "reasoning": "Analysis",
-    "risk": "Risk",
-    "targetPrice": "Target Price",
-    "sources": "Sources",
-    "disclaimer": "AI-generated content for informational purposes only. Not financial advice.",
-    "buy": "BUY",
-    "sell": "SELL",
-    "hold": "HOLD",
-    "rebalance": "REBALANCE"
-  },
-  "sap2025": {
-    "title": "STRUKTUR INTI PORTOFOLIO — SAP 2025",
-    "subtitle": "Smart Adaptive Portfolio Strategy",
-    "core": "CORE (INTI)",
-    "satellite": "SATELLITE (SATELIT)",
-    "defensive": "DEFENSIVE (MITIGASI)",
-    "coreDesc": "Stable long-term growth (Stocks, ETFs, Real Estate)",
-    "satelliteDesc": "High growth potential & speculation (Crypto)",
-    "defensiveDesc": "Safety & capital preservation (Bonds, Cash)",
-    "current": "Current",
-    "target": "Target",
-    "status": "Portfolio Status"
   },
   "components": {
     "scanner": {
@@ -641,69 +540,16 @@
     "overdueBy": "{days} days overdue",
     "getReminder": "Get AI Reminder"
   },
-  "investmentsPage": {
-    "title": "Investments Overview",
-    "subtitle": "Track portfolio performance, cash allocation, and market movements without leaving the dashboard.",
-    "refresh": "Refresh Market Data",
-    "refreshing": "Updating...",
-    "add": "Add Investment",
-    "wallet": "Portfolio Cash Wallet",
-    "deposit": "Deposit",
-    "withdraw": "Withdraw",
-    "buyingPower": "Buying Power",
-    "manage": "Manage Position",
-    "chartTitle": "Investment Performance",
-    "chartSubtitle": "Compare cost basis against current market value for your active holdings.",
-    "allocationTitle": "Portfolio Allocation",
-    "allocationSubtitle": "See how your portfolio is distributed across assets.",
-    "holdingsTitle": "Portfolio Holdings",
-    "detailsTitle": "Portfolio Snapshot",
-    "emptyTitle": "No investments yet",
-    "emptyDescription": "Add your first investment to start tracking performance and allocation.",
-    "noChartData": "Add at least one active investment to render performance charts.",
-    "noAllocationData": "Allocation details will appear after you add active assets.",
-    "prompts": {
-      "deposit": "Amount to deposit:",
-      "withdraw": "Amount to withdraw:",
-      "insufficientFunds": "Insufficient funds in wallet."
-    },
-    "totalFunds": {
-      "title": "Total Company Funds",
-      "operating": "Operating Cash",
-      "portfolio": "Portfolio Value"
-    },
-    "stats": {
-      "totalInvested": "Total Invested",
-      "totalReturns": "Total Returns",
-      "growth": "Growth Rate",
-      "activeInvestments": "Active Investments"
-    },
-    "recentActivity": {
-      "title": "Recent Investment Activity",
-      "empty": "No recent investment updates yet.",
-      "buy": "Buy",
-      "sell": "Sell",
-      "updated": "Updated {date}",
-      "amount": "Amount"
-    },
-    "table": {
-      "asset": "Asset",
-      "qty": "Qty",
-      "avgPrice": "Avg. Price",
-      "currentPrice": "Current Price",
-      "value": "Value",
-      "alloc": "Alloc %",
-      "target": "Target %",
-      "return": "Return",
-      "actions": "Actions",
-      "deleteConfirm": "Remove this asset from your portfolio?",
-      "empty": "No active investments yet."
-    },
-    "marketInsights": {
-      "title": "AI Market Opportunities",
-      "subtitle": "Real-time trends and recommendations powered by Google Search",
-      "refresh": "Refresh Insights",
-      "empty": "Market signals will appear here after recommendations are available."
-    }
+  "nav": {
+    "dashboard": "Dashboard",
+    "pos": "Cashier",
+    "transactions": "Transactions",
+    "invoices": "Invoices",
+    "enterprise": "Command Center",
+    "products": "Products",
+    "budgets": "Budgets",
+    "goals": "Goals",
+    "settings": "Settings",
+    "navigation": "Main navigation"
   }
 }

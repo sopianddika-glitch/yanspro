@@ -17,12 +17,8 @@ export class CanvasRenderer {
         if ('OffscreenCanvas' in window && localStorage.getItem('FEATURE_ULTRA_SMOOTH') === 'true') {
             try {
                 // Transfer control to worker
-                const offscreen = this.canvas.transferControlToOffscreen();
-                // This would typically load a separate rendering worker
-                // For this simplified implementation, we just log success
-                console.log('Renderer: Initialized OffscreenCanvas mode');
-            } catch (e) {
-                console.warn('Renderer: Failed to transfer control to offscreen, falling back.', e);
+                this.canvas.transferControlToOffscreen();
+            } catch {
                 this.initFallback();
             }
         } else {
@@ -32,7 +28,6 @@ export class CanvasRenderer {
 
     private initFallback() {
         this.ctx = this.canvas.getContext('2d');
-        console.log('Renderer: Initialized Main Thread 2D Context');
     }
 
     public drawRect(x: number, y: number, color: string) {

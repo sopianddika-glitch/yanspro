@@ -73,8 +73,7 @@ export async function encryptData(plaintext: string): Promise<string> {
         // Convert buffer to a base64 string for easy storage in localStorage
         // Using chunked conversion to prevent stack overflow on large data
         return bufferToBase64(ivAndCiphertext);
-    } catch (e) {
-        console.error("Encryption failed:", e);
+    } catch {
         // Fallback to returning plaintext if encryption fails to prevent data loss.
         return plaintext;
     }
@@ -103,18 +102,15 @@ export async function decryptData(base64Ciphertext: string): Promise<string | nu
 
         const decoder = new TextDecoder();
         return decoder.decode(decryptedBuffer);
-    } catch (e) {
+    } catch {
         // If decryption fails, it might be unencrypted legacy data.
         // A simple check for valid JSON can distinguish.
         try {
             JSON.parse(base64Ciphertext);
             // It is valid JSON, so we return it as plaintext.
-            // console.log("Data appears to be unencrypted legacy JSON, returning as is.");
             return base64Ciphertext;
-        } catch (jsonError) {
+        } catch {
              // If it's not valid JSON either, then it's likely corrupted encrypted data.
-             // Suppress console.warn to avoid user alarm during dev cycles or key changes.
-            // console.debug("Decryption failed and data is not valid JSON. Data may be corrupt or key is incorrect.");
             return null; // Return null to indicate failure.
         }
     }

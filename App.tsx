@@ -1,10 +1,9 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Transaction, TransactionType, FinancialSummary, Page, Category, ReceiptAnalysisResult, RecurringTransaction, Frequency, Budget, BudgetPeriod, BudgetSuggestionResult, Profile, Invoice, InvoiceStatus, InvoiceItem, Theme, SupportedLocale, Goal, Product, CartItem, ChatMessage, AiActionResponse, ProductType, CashFlowPoint, Client, Investment, AppNotification, NotificationType, TransactionAudit, AuditAction } from './types';
+import { Transaction, TransactionType, FinancialSummary, Page, Category, ReceiptAnalysisResult, RecurringTransaction, Frequency, Budget, Profile, Invoice, InvoiceStatus, Theme, SupportedLocale, Goal, Product, CartItem, ChatMessage, AiActionResponse, ProductType, Client, AppNotification, NotificationType, TransactionAudit, AuditAction } from './types';
 import Header from './components/Header';
 import AddTransactionModal from './components/AddTransactionModal';
 import ReceiptScannerModal from './components/ReceiptScannerModal';
-import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import TransactionsPage from './pages/TransactionsPage';
 import ReportsPage from './pages/ReportsPage';
@@ -25,7 +24,6 @@ import ChatAssistantModal from './components/ChatAssistantModal';
 import InstallInstructionsModal from './components/InstallInstructionsModal';
 import ImportTransactionsModal from './components/ImportTransactionsModal';
 import ClientsPage from './pages/ClientsPage';
-import InvestmentsPage from './pages/InvestmentsPage';
 import EnterprisePage from './pages/EnterprisePage';
 import NotificationToast from './components/NotificationToast';
 import AddClientModal from './components/AddClientModal';
@@ -48,7 +46,6 @@ interface ProfileData {
     goals: Goal[];
     products: Product[];
     clients: Client[];
-    investments: Investment[];
     lastRecurringCheck?: string;
 }
 
@@ -90,7 +87,6 @@ const initialData: ProfileData = {
         { id: 'prod-10', name: 'Software License (Annual)', description: 'Yearly subscription license key', price: 120, type: 'good', sku: 'SW-LIC-1Y', trackStock: true, stock: 500, minStock: 50 },
     ],
     clients: [],
-    investments: [],
 };
 
 type PreloadedTransaction = {
@@ -135,8 +131,6 @@ const App: React.FC = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isScannerOpen, setIsScannerOpen] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For mobile overlay
-    const [isSidebarMini, setIsSidebarMini] = useState(false); // For desktop mini mode
     const [currentPage, setCurrentPage] = useState<Page>('dashboard');
     
     // Transaction Editing State
@@ -246,7 +240,6 @@ const App: React.FC = () => {
                 }
 
                 if (corruptionDetected) {
-                    console.info("Data format change or corruption detected. Resetting storage to defaults.");
                     localStorage.removeItem('yans-pro-profiles-encrypted');
                     localStorage.removeItem('yans-pro-data-encrypted');
                     localStorage.removeItem('yans-pro-crypto-key');
@@ -278,8 +271,7 @@ const App: React.FC = () => {
                     setActiveProfileId(finalProfiles[0]?.id || 'default-profile');
                 }
 
-            } catch (error) {
-                console.error("Critical error during data loading. Resetting to defaults.", error);
+            } catch {
                 localStorage.removeItem('yans-pro-profiles');
                 localStorage.removeItem('yans-pro-data');
                 localStorage.removeItem('yans-pro-profiles-encrypted');
@@ -347,11 +339,10 @@ const App: React.FC = () => {
             auditLog: data.auditLog || [],
             products: data.products || [],
             clients: data.clients || [],
-            investments: data.investments || []
         };
     }, [dataByProfile, activeProfileId]);
 
-    const { transactions, categories, budgets, recurringTransactions, invoices, goals, products, clients, investments, auditLog } = activeProfileData;
+    const { transactions, categories, budgets, recurringTransactions, invoices, goals, products, clients, auditLog } = activeProfileData;
 
     const setDataForProfile = useCallback((profileId: string, updates: Partial<ProfileData>) => {
         setDataByProfile(prev => ({ ...prev, [profileId]: { ...(prev[profileId] || initialData), ...updates } }));
@@ -368,7 +359,6 @@ const App: React.FC = () => {
     // --- NAVIGATION & MODAL HANDLERS ---
     const handleNavigate = useCallback((page: Page) => { 
         setCurrentPage(page); 
-        setIsSidebarOpen(false);
     }, []);
 
     const handleSwitchProfile = useCallback((id: string) => setActiveProfileId(id), []);
@@ -699,48 +689,6 @@ const App: React.FC = () => {
         showNotification('success', 'Client deleted.');
     }, [activeProfileId, clients, setDataForProfile, showNotification]);
 
-    // Investment Handlers
-    const handleAddInvestment = useCallback((investmentData: Omit<Investment, 'id' | 'currentPrice'>) => {
-        const newInvestment: Investment = {
-            ...investmentData,
-            id: 'inv-' + new Date().getTime(),
-            currentPrice: investmentData.avgBuyPrice // Init with buy price
-        };
-        setDataForProfile(activeProfileId, { investments: [...investments, newInvestment] });
-        showNotification('success', 'Asset added to portfolio.');
-    }, [activeProfileId, investments, setDataForProfile, showNotification]);
-
-    const handleDeleteInvestment = useCallback((id: string) => {
-        setDataForProfile(activeProfileId, { investments: investments.filter(i => i.id !== id) });
-        showNotification('success', 'Asset removed.');
-    }, [activeProfileId, investments, setDataForProfile, showNotification]);
-
-    const handleUpdateInvestmentPrices = useCallback((priceMap: { [symbol: string]: number }) => {
-        const updatedInvestments = investments.map(inv => {
-            if (priceMap[inv.symbol]) {
-                return { ...inv, currentPrice: priceMap[inv.symbol], lastUpdated: new Date().toISOString() };
-            }
-            return inv;
-        });
-        setDataForProfile(activeProfileId, { investments: updatedInvestments });
-        showNotification('success', 'Market prices updated.');
-    }, [activeProfileId, investments, setDataForProfile, showNotification]);
-
-    const handleBatchUpdateInvestments = useCallback((updatedInvestments: Investment[]) => {
-        const updatedMap = new Map(updatedInvestments.map(i => [i.id, i]));
-        const mergedInvestments = investments.map(inv => updatedMap.get(inv.id) || inv);
-        
-        updatedInvestments.forEach(inv => {
-            if (!investments.some(existing => existing.id === inv.id)) {
-                mergedInvestments.push(inv);
-            }
-        });
-
-        setDataForProfile(activeProfileId, { investments: mergedInvestments });
-        showNotification('success', 'Portfolio updated.');
-    }, [activeProfileId, investments, setDataForProfile, showNotification]);
-
-
     const handleSaveInvoice = useCallback((invoiceData: Omit<Invoice, 'id' | 'profileId'> | Invoice) => {
         let updatedInvoice: Invoice;
         let finalTransactions = transactions;
@@ -1003,7 +951,7 @@ const App: React.FC = () => {
                 break;
             }
             default:
-                console.warn("Unknown AI action type:", type);
+                return;
         }
     }, [handleAddTransaction, handleSaveInvoice, handleSaveProduct]);
 
@@ -1037,7 +985,6 @@ const App: React.FC = () => {
             }
 
         } catch (error) {
-            console.error("AI Chat Error:", error);
             const errorMessage = error instanceof Error ? error.message : t('general.error.unknown');
             setChatHistory(prev => [...prev, { role: 'ai', content: t('ai.chat.error', { error: errorMessage }) }]);
         } finally {
@@ -1089,16 +1036,6 @@ const App: React.FC = () => {
                 return <ClientsPage clients={clients} transactions={transactions} currency={activeProfile.currency} onAddClient={handleAddClient} onUpdateClient={handleUpdateClient} onDeleteClient={handleDeleteClient}/>;
             case 'pos':
                 return <PosPage products={products} currency={activeProfile.currency} onCharge={handleCharge} onNavigate={handleNavigate} />;
-            case 'investments':
-                return <InvestmentsPage 
-                    investments={investments} 
-                    currency={activeProfile.currency} 
-                    operatingBalance={financialSummary.balance}
-                    onAddInvestment={handleAddInvestment} 
-                    onDeleteInvestment={handleDeleteInvestment} 
-                    onUpdatePrices={handleUpdateInvestmentPrices} 
-                    onBatchUpdate={handleBatchUpdateInvestments} 
-                />;
             case 'enterprise':
                 return <EnterprisePage 
                     transactions={transactions} 
@@ -1109,7 +1046,7 @@ const App: React.FC = () => {
             default:
                 return <Dashboard transactions={transactions} invoices={invoices} recurringTransactions={recurringTransactions} budgets={budgets} categories={categories} summary={financialSummary} activeProfile={activeProfile} onAddTransactionClick={handleOpenAddTransaction} onAddFromReceiptClick={handleOpenScanner} onNavigateToInvoice={handleNavigateToInvoice} onNavigateToSettings={() => handleNavigate('settings')} onNavigate={handleNavigate} theme={theme} onOpenInstallModal={handleOpenInstallModal} />;
         }
-    }, [currentPage, transactions, invoices, financialSummary, activeProfile, handleOpenAddTransaction, handleOpenScanner, handleNavigateToInvoice, theme, handleDeleteTransactions, handleAddCategory, handleUpdateCategory, handleDeleteCategory, recurringTransactions, handleDeleteRecurringTransaction, handleOpenRecurringModal, profiles, activeProfileId, handleAddProfile, handleUpdateProfile, handleDeleteProfile, handleExportData, handleResetProfileData, budgets, categories, handleOpenBudgetModal, handleUpdateBudget, handleDeleteBudget, handleDeleteInvoice, handleSaveInvoice, editingInvoiceId, locale, goals, handleOpenGoalModal, handleDeleteGoal, handleOpenFundsModal, products, handleOpenProductModal, handleDeleteProduct, handleCharge, handleNavigateToInvoiceFromTransaction, handleNavigate, handleOpenClientSelectorForInvoice, handleOpenInstallModal, handleOpenImportModal, clients, handleOpenClientModal, handleUpdateClient, handleDeleteClient, investments, handleAddInvestment, handleDeleteInvestment, handleUpdateInvestmentPrices, handleBatchUpdateInvestments, handleOpenEditTransactionModal, handleDeleteInvoiceFromEditor, handleRestoreTransaction]);
+    }, [currentPage, transactions, invoices, financialSummary, activeProfile, handleOpenAddTransaction, handleOpenScanner, handleNavigateToInvoice, theme, handleDeleteTransactions, handleAddCategory, handleUpdateCategory, handleDeleteCategory, recurringTransactions, handleDeleteRecurringTransaction, handleOpenRecurringModal, profiles, activeProfileId, handleAddProfile, handleUpdateProfile, handleDeleteProfile, handleExportData, handleResetProfileData, budgets, categories, handleOpenBudgetModal, handleUpdateBudget, handleDeleteBudget, handleDeleteInvoice, handleSaveInvoice, editingInvoiceId, locale, goals, handleOpenGoalModal, handleDeleteGoal, handleOpenFundsModal, products, handleOpenProductModal, handleDeleteProduct, handleCharge, handleNavigateToInvoiceFromTransaction, handleNavigate, handleOpenClientSelectorForInvoice, handleOpenInstallModal, handleOpenImportModal, clients, handleOpenClientModal, handleUpdateClient, handleDeleteClient, handleOpenEditTransactionModal, handleDeleteInvoiceFromEditor, handleRestoreTransaction]);
 
     if (isDataLoading) {
         return (
@@ -1121,10 +1058,9 @@ const App: React.FC = () => {
 
     return (
         <I18nProvider locale={locale}>
-            <div className="flex h-screen bg-gray-100 dark:bg-brand-primary font-sans">
-                <Sidebar isMobileOpen={isSidebarOpen} onMobileClose={() => setIsSidebarOpen(false)} isMini={isSidebarMini} setIsMini={setIsSidebarMini} currentPage={currentPage} onNavigate={handleNavigate} />
-                <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out ${isSidebarMini ? 'lg:ml-20' : 'lg:ml-64'}`}>
-                    <Header onMenuClick={() => setIsSidebarOpen(true)} profiles={profiles} activeProfile={activeProfile} onSwitchProfile={handleSwitchProfile} onManageProfiles={() => handleNavigate('settings')} theme={theme} onSetTheme={handleSetTheme} />
+            <div className="flex h-screen bg-gray-100 font-sans dark:bg-brand-primary">
+                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                    <Header currentPage={currentPage} onNavigate={handleNavigate} profiles={profiles} activeProfile={activeProfile} onSwitchProfile={handleSwitchProfile} onManageProfiles={() => handleNavigate('settings')} theme={theme} onSetTheme={handleSetTheme} />
                     <main className="flex-1 overflow-x-hidden overflow-y-auto">
                         {renderPage()}
                     </main>

@@ -34,13 +34,11 @@ const AppContainer = () => {
               broaderRegistrations.map((registration) => registration.unregister())
             );
 
-            const registration = await navigator.serviceWorker.register(serviceWorkerUrl, {
+            await navigator.serviceWorker.register(serviceWorkerUrl, {
               scope: import.meta.env.BASE_URL,
             });
-
-            console.log('SW registered:', registration);
-          } catch (registrationError) {
-            console.log('SW registration failed:', registrationError);
+          } catch {
+            // Service worker registration is optional; the app stays usable without it.
           }
         })();
       });
