@@ -101,7 +101,7 @@ const OverviewChart: React.FC<OverviewChartProps> = ({ transactions, theme, curr
 
             <div className="responsive-chart mt-6">
                 <div className="responsive-chart-inner">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 320, height: 288 }}>
                         <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 8 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#E5E7EB'} vertical={false} />
                         <XAxis

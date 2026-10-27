@@ -49,11 +49,11 @@ const ProductCard: React.FC<{ product: Product; currency: string; onEdit: () => 
                         </span>
                     )}
                 </div>
-                {product.sku && <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 font-mono">SKU: {product.sku}</p>}
+                {product.sku && <p className="wrap-anywhere text-xs text-gray-400 dark:text-gray-500 mt-2 font-mono">SKU: {product.sku}</p>}
                 {product.description && <p className="text-sm text-gray-500 dark:text-brand-muted mt-2 line-clamp-2">{product.description}</p>}
             </div>
             <div className="mt-4 text-right">
-                <p className="text-2xl font-bold text-gray-800 dark:text-white">{formatCurrency(product.price, currency)}</p>
+                <p className="wrap-anywhere text-2xl font-bold text-gray-800 dark:text-white">{formatCurrency(product.price, currency)}</p>
             </div>
         </div>
     );

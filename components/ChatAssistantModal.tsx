@@ -51,7 +51,7 @@ const ChatAssistantModal: React.FC<ChatAssistantModalProps> = ({ isOpen, onClose
                     {history.map((msg, index) => (
                         <div key={index} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {msg.role === 'ai' && <div className="w-8 h-8 rounded-full bg-brand-accent flex items-center justify-center flex-shrink-0"><SparklesIcon className="w-5 h-5 text-white"/></div>}
-                            <div className={`max-w-md p-3 rounded-2xl ${msg.role === 'user' ? 'bg-brand-accent text-white rounded-br-none' : 'bg-gray-100 dark:bg-brand-primary text-gray-800 dark:text-gray-200 rounded-bl-none'}`}>
+                            <div className={`min-w-0 max-w-md break-words [overflow-wrap:anywhere] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-brand-accent text-white rounded-br-none' : 'bg-gray-100 dark:bg-brand-primary text-gray-800 dark:text-gray-200 rounded-bl-none'}`}>
                                 <p className={`text-sm ${msg.isActionConfirmation ? 'italic text-blue-700 dark:text-blue-300' : ''}`}>{msg.content}</p>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ const ChatAssistantModal: React.FC<ChatAssistantModalProps> = ({ isOpen, onClose
                     {isLoading && (
                         <div className="flex gap-3 justify-start">
                              <div className="w-8 h-8 rounded-full bg-brand-accent flex items-center justify-center flex-shrink-0"><SparklesIcon className="w-5 h-5 text-white animate-pulse"/></div>
-                             <div className="max-w-md p-3 rounded-2xl bg-gray-100 dark:bg-brand-primary rounded-bl-none flex items-center gap-2">
+                             <div className="min-w-0 max-w-md break-words [overflow-wrap:anywhere] p-3 rounded-2xl bg-gray-100 dark:bg-brand-primary rounded-bl-none flex items-center gap-2">
                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>

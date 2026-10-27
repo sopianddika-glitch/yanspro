@@ -61,9 +61,9 @@ const ProfileManagerModal: React.FC<ProfileManagerModalProps> = ({ isOpen, onClo
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4" role="dialog" aria-modal="true" aria-label={existingProfile ? t('modals.profileManager.editTitle') : t('modals.profileManager.addTitle')}>
             <div className="bg-white dark:bg-brand-secondary rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
-                <form onSubmit={handleSubmit} className="flex flex-col h-full">
+                <form onSubmit={handleSubmit} className="flex min-h-0 flex-col overflow-hidden">
                     <div className="flex justify-between items-center p-5 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
                         <h2 className="text-xl font-bold text-gray-800 dark:text-white">{existingProfile ? t('modals.profileManager.editTitle') : t('modals.profileManager.addTitle')}</h2>
                         <button type="button" onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">

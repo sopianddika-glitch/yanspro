@@ -287,11 +287,16 @@ const App: React.FC = () => {
 
     // --- DATA PERSISTENCE EFFECTS (ENCRYPTION) ---
     useEffect(() => {
+        let cancelled = false;
         if (!isDataLoading) {
-            encryptData(JSON.stringify(profiles)).then(encrypted => localStorage.setItem('yans-pro-profiles-encrypted', encrypted));
-            if (localStorage.getItem('yans-pro-profiles')) localStorage.removeItem('yans-pro-profiles');
+            encryptData(JSON.stringify(profiles)).then(encrypted => {
+                if (cancelled) return;
+                localStorage.setItem('yans-pro-profiles-encrypted', encrypted);
+                localStorage.removeItem('yans-pro-profiles');
+            }).catch(() => showNotification('error', locale === 'id' ? 'Profil gagal disimpan. Periksa ruang penyimpanan browser.' : 'Could not save profiles. Check browser storage space.'));
         }
-    }, [profiles, isDataLoading]);
+        return () => { cancelled = true; };
+    }, [profiles, isDataLoading, showNotification, locale]);
     
     useEffect(() => {
         if (!isDataLoading) {
@@ -300,11 +305,16 @@ const App: React.FC = () => {
     }, [activeProfileId, isDataLoading]);
     
     useEffect(() => {
+        let cancelled = false;
         if (!isDataLoading) {
-            encryptData(JSON.stringify(dataByProfile)).then(encrypted => localStorage.setItem('yans-pro-data-encrypted', encrypted));
-            if (localStorage.getItem('yans-pro-data')) localStorage.removeItem('yans-pro-data');
+            encryptData(JSON.stringify(dataByProfile)).then(encrypted => {
+                if (cancelled) return;
+                localStorage.setItem('yans-pro-data-encrypted', encrypted);
+                localStorage.removeItem('yans-pro-data');
+            }).catch(() => showNotification('error', locale === 'id' ? 'Data gagal disimpan. Periksa ruang penyimpanan browser.' : 'Could not save data. Check browser storage space.'));
         }
-    }, [dataByProfile, isDataLoading]);
+        return () => { cancelled = true; };
+    }, [dataByProfile, isDataLoading, showNotification, locale]);
 
 
     // --- THEME & LOCALE EFFECT ---
@@ -1058,10 +1068,10 @@ const App: React.FC = () => {
 
     return (
         <I18nProvider locale={locale}>
-            <div className="flex h-screen bg-gray-100 font-sans dark:bg-brand-primary">
+            <div className="app-shell flex bg-gray-100 font-sans dark:bg-brand-primary">
                 <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                     <Header currentPage={currentPage} onNavigate={handleNavigate} profiles={profiles} activeProfile={activeProfile} onSwitchProfile={handleSwitchProfile} onManageProfiles={() => handleNavigate('settings')} theme={theme} onSetTheme={handleSetTheme} />
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto">
+                    <main className={`app-main min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto ${currentPage === 'pos' ? 'app-main-pos' : ''}`}>
                         {renderPage()}
                     </main>
                 </div>
@@ -1101,7 +1111,7 @@ const App: React.FC = () => {
                     onConfirm={handleGenerateInvoiceFromTransactions}
                     existingClients={[...new Set(invoices.map(inv => inv.clientName))]}
                 />
-                <ChatAssistantButton onClick={() => setIsChatOpen(true)} />
+                {currentPage !== 'pos' && <ChatAssistantButton onClick={() => setIsChatOpen(true)} />}
                 <ChatAssistantModal 
                     isOpen={isChatOpen}
                     onClose={() => setIsChatOpen(false)}

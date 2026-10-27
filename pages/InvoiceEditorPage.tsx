@@ -256,7 +256,7 @@ const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, e
                                             <input type="number" value={item.price} onChange={e => handleItemChange(index, 'price', e.target.value)} disabled={isPaidAndLocked} className="w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded mt-1 p-2 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-brand-accent focus:outline-none transition disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:cursor-not-allowed" min="0" />
                                         </div>
                                     </div>
-                                     <div className="text-right text-lg font-bold text-gray-800 dark:text-gray-200">
+                                     <div className="wrap-anywhere text-right text-lg font-bold text-gray-800 dark:text-gray-200">
                                          {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(item.quantity * item.price)}
                                      </div>
                                 </div>
@@ -281,13 +281,13 @@ const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, e
                             </div>
                         </div>
                         <div className="text-right space-y-2 mt-4 md:mt-0">
-                             <div className="flex justify-between text-lg">
+                             <div className="flex flex-wrap gap-2 justify-between text-lg">
                                 <span className="text-gray-500 dark:text-brand-muted">{t('invoiceEditor.subtotal')}</span>
                                 <span className="font-mono text-gray-800 dark:text-gray-200">{new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(total)}</span>
                              </div>
-                             <div className="flex justify-between text-2xl font-bold text-gray-800 dark:text-gray-100">
+                             <div className="flex flex-wrap gap-2 justify-between text-2xl font-bold text-gray-800 dark:text-gray-100">
                                  <span>{t('invoicesPage.total')}:</span>
-                                 <span>{new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(total)}</span>
+                                 <span className="wrap-anywhere">{new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(total)}</span>
                              </div>
                         </div>
                     </div>

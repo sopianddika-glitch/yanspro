@@ -7,10 +7,12 @@ import {
     DashboardIcon,
     FlagIcon,
     InvoiceIcon,
+    ReportsIcon,
     SettingsIcon,
     StorefrontIcon,
     TagIcon,
     TransactionsIcon,
+    UsersIcon,
     XIcon,
 } from './Icons';
 import { useI18n } from '../hooks/useI18n';
@@ -31,6 +33,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ currentPage, onNavigate }) => {
     const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const toggleRef = useRef<HTMLButtonElement>(null);
 
     const navItems = useMemo<HeaderNavItem[]>(() => [
         { page: 'dashboard', labelKey: 'nav.dashboard', Icon: DashboardIcon },
@@ -41,6 +44,8 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ currentPage, onNavigate }) => {
         { page: 'products', labelKey: 'nav.products', Icon: TagIcon },
         { page: 'budgets', labelKey: 'nav.budgets', Icon: BudgetIcon },
         { page: 'goals', labelKey: 'nav.goals', Icon: FlagIcon },
+        { page: 'reports', labelKey: 'nav.reports', Icon: ReportsIcon },
+        { page: 'clients', labelKey: 'nav.clients', Icon: UsersIcon },
         { page: 'settings', labelKey: 'nav.settings', Icon: SettingsIcon },
     ], []);
 
@@ -54,8 +59,18 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ currentPage, onNavigate }) => {
         };
 
         document.addEventListener('pointerdown', handlePointerDown);
-        return () => document.removeEventListener('pointerdown', handlePointerDown);
-    }, []);
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && isOpen) {
+                setIsOpen(false);
+                toggleRef.current?.focus();
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen]);
 
     const handleNavigate = (page: Page) => {
         onNavigate(page);
@@ -95,11 +110,13 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ currentPage, onNavigate }) => {
             </div>
 
             <button
+                ref={toggleRef}
                 type="button"
                 onClick={() => setIsOpen(prev => !prev)}
                 className="header-menu-button h-11 max-w-[min(16rem,55vw)] items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 dark:border-gray-700 dark:bg-brand-primary dark:text-gray-100 dark:hover:bg-gray-800"
                 aria-expanded={isOpen}
-                aria-haspopup="menu"
+                aria-label={`${t('nav.navigation')}: ${t(activeItem.labelKey)}`}
+                aria-controls="header-navigation"
             >
                 <ActiveIcon className="h-5 w-5 text-brand-accent" />
                 <span className="hidden min-w-0 truncate sm:inline">{t(activeItem.labelKey)}</span>
@@ -107,7 +124,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ currentPage, onNavigate }) => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 top-14 z-30 max-h-[min(32rem,calc(100vh-6rem))] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-xl dark:border-gray-700 dark:bg-brand-secondary">
+                <div id="header-navigation" className="absolute right-0 top-full mt-2 z-30 max-h-[min(32rem,calc(100dvh-7rem))] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-xl dark:border-gray-700 dark:bg-brand-secondary">
                     <div className="mb-1 flex items-center justify-between px-2 py-1">
                         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 dark:text-brand-muted">
                             {t('nav.navigation')}

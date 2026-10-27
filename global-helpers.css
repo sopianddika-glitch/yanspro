@@ -30,7 +30,6 @@ html.dark body {
 }
 
 .chart-container,
-.recharts-wrapper,
 .chart-wrapper {
   width: 100%;
   min-height: 320px;
@@ -58,6 +57,8 @@ textarea {
 }
 
 .app-shell {
+  height: 100vh;
+  height: 100dvh;
   width: 100%;
   min-width: 0;
   overflow-x: clip;
@@ -72,7 +73,52 @@ textarea {
 
 .responsive-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(0.875rem, 1.1vw, 1.5rem);
+}
+
+.responsive-stack > *,
+.dashboard-hero-grid > *,
+.dashboard-chart-grid > *,
+.dashboard-three-grid > *,
+.dashboard-split-grid > * {
+  min-width: 0;
+}
+
+/* Leave room for the floating assistant when scrolling to the last action. */
+.app-main:not(.app-main-pos) {
+  padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  scroll-padding-bottom: 5rem;
+}
+
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+.app-shell [aria-modal="true"] > div {
+  max-height: min(90vh, calc(100dvh - 2rem));
+  min-width: 0;
+}
+
+.app-shell [aria-modal="true"] form,
+.app-shell [aria-modal="true"] .flex-grow {
+  min-height: 0;
+}
+
+/* Native date controls also have an intrinsic width on narrow screens. */
+input,
+select,
+textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 .responsive-grid {
@@ -180,7 +226,7 @@ textarea {
   .dashboard-hero-grid,
   .dashboard-chart-grid,
   .dashboard-split-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -195,7 +241,7 @@ textarea {
   .dashboard-chart-grid,
   .dashboard-three-grid,
   .dashboard-split-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

@@ -41,9 +41,9 @@ const GoalCard: React.FC<{ goal: Goal; currency: string; onEdit: () => void; onD
                 )}
 
                 <div className="mt-4">
-                    <div className="flex justify-between items-baseline mb-1">
-                        <span className="text-sm font-semibold text-gray-600 dark:text-gray-300">{formatCurrency(goal.currentAmount, currency)}</span>
-                        <span className="text-sm text-gray-500 dark:text-brand-muted">{formatCurrency(goal.targetAmount, currency)}</span>
+                    <div className="flex flex-wrap gap-2 justify-between items-baseline mb-1">
+                        <span className="wrap-anywhere text-sm font-semibold text-gray-600 dark:text-gray-300">{formatCurrency(goal.currentAmount, currency)}</span>
+                        <span className="wrap-anywhere text-sm text-gray-500 dark:text-brand-muted">{formatCurrency(goal.targetAmount, currency)}</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-brand-primary rounded-full h-3">
                         <div className={`${progressBarColor} h-3 rounded-full transition-width duration-500`} style={{ width: `${Math.min(percentage, 100)}%` }}></div>

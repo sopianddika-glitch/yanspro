@@ -41,10 +41,10 @@ const ExpenseBreakdownChart: React.FC<ExpenseBreakdownChartProps> = ({ transacti
     }
 
     return (
-        <div className="bg-white dark:bg-brand-secondary p-4 sm:p-6 rounded-xl shadow-md dark:shadow-lg h-96 flex flex-col">
+        <div className="min-w-0 bg-white dark:bg-brand-secondary p-4 sm:p-6 rounded-xl shadow-md dark:shadow-lg flex flex-col">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 flex-shrink-0">Expense Breakdown</h3>
-            <div className="flex-grow w-full overflow-hidden min-h-[300px]" style={{ minHeight: '300px' }}>
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full min-w-0 h-80">
+                <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 288, height: 320 }}>
                     <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 40 }}>
                         <Pie
                             data={data}

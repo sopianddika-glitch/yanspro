@@ -9,7 +9,18 @@ const IV_LENGTH = 12; // bytes
  * Retrieves the encryption key from localStorage or creates a new one.
  * This key is used for symmetrical encryption of user data.
  */
+let pendingKey: Promise<CryptoKey> | null = null;
+
 async function getOrCreateKey(): Promise<CryptoKey> {
+    // Profiles and financial data save concurrently on a fresh installation.
+    // Share key creation so both payloads remain decryptable after a reload.
+    if (!pendingKey) {
+        pendingKey = loadOrCreateKey().finally(() => { pendingKey = null; });
+    }
+    return pendingKey;
+}
+
+async function loadOrCreateKey(): Promise<CryptoKey> {
     const storedKey = localStorage.getItem(KEY_STORAGE_KEY);
     if (storedKey) {
         const jwk = JSON.parse(storedKey);

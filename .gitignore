@@ -20,3 +20,7 @@ Thumbs.db
 *.bak.wsfix
 *.cleanbak*
 *_fix_*
+
+# Local browser audit artifacts
+.playwright-cli/
+output/

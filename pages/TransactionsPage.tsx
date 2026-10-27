@@ -462,7 +462,7 @@ const TransactionsPage: React.FC<TransactionsPageProps> = ({
                 <div className="md:hidden p-4 space-y-4">
                      {filteredAndSortedTransactions.map((transaction) => (
                         <div key={transaction.id} className={`p-4 rounded-lg shadow-sm border ${selectedIds.has(transaction.id) ? 'bg-blue-50 dark:bg-blue-900/20 border-brand-accent' : 'bg-gray-50 dark:bg-brand-primary border-gray-200 dark:border-gray-700'} relative ${transaction.deletedAt ? 'opacity-70 border-red-200' : ''}`}>
-                            <div className="flex justify-between items-start">
+                            <div className="flex flex-wrap gap-y-3 justify-between items-start">
                                 <div className="flex items-center gap-3 flex-1 min-w-0">
                                     <input type="checkbox"
                                         className="h-6 w-6 rounded border-gray-400 dark:border-gray-500 bg-gray-100 dark:bg-brand-primary text-brand-accent focus:ring-brand-accent"
@@ -482,8 +482,8 @@ const TransactionsPage: React.FC<TransactionsPageProps> = ({
                                         <p className="text-sm text-gray-500 dark:text-brand-muted truncate">{transaction.category}</p>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-end flex-shrink-0 ml-2">
-                                    <p className={`text-lg font-bold ${transaction.type === TransactionType.INCOME ? 'text-green-600 dark:text-brand-green' : 'text-red-600 dark:text-brand-red'}`}>
+                                <div className="flex min-w-0 max-w-full flex-col items-end ml-auto pl-2">
+                                    <p className={`wrap-anywhere text-lg font-bold ${transaction.type === TransactionType.INCOME ? 'text-green-600 dark:text-brand-green' : 'text-red-600 dark:text-brand-red'}`}>
                                         {transaction.type === TransactionType.INCOME ? '+' : '-'}
                                         {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(transaction.amount)}
                                     </p>

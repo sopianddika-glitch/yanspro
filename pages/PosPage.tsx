@@ -147,15 +147,15 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
     }
 
     return (
-        <div className="flex flex-col md:flex-row h-full bg-gray-100 dark:bg-brand-primary overflow-hidden relative">
+        <div className="flex min-h-0 min-w-0 flex-col lg:flex-row h-full bg-gray-100 dark:bg-brand-primary overflow-hidden relative">
             
             {/* --- RIGHT PANEL: PRODUCT GRID (Main Content) --- */}
             {/* Note: In DOM order, this is mainly 2nd on desktop, but we put it first for logic structure, then use flex order/size */}
-            <div className="flex-1 flex flex-col h-full w-full overflow-hidden order-1 md:order-1">
+            <div className="flex-1 min-h-0 min-w-0 flex flex-col h-full w-full overflow-hidden order-1 lg:order-1">
                 {/* Search Header */}
                 <div className="p-4 bg-white/80 dark:bg-brand-secondary/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 flex-shrink-0 z-10 sticky top-0">
                     <div className="flex gap-2">
-                        <div className="relative flex-grow">
+                        <div className="relative min-w-0 flex-grow">
                             <input
                                 ref={searchInputRef}
                                 id="pos-search"
@@ -194,7 +194,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                 </div>
 
                 {/* Product Grid */}
-                <div className="flex-grow p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 content-start pb-24 md:pb-4">
+                <div className="flex-grow p-4 overflow-y-auto grid grid-cols-[repeat(auto-fill,minmax(min(100%,9rem),1fr))] gap-3 content-start pb-24 lg:pb-4">
                     {filteredProducts.map(product => {
                         const isOutOfStock = product.trackStock && (product.stock || 0) <= 0;
                         return (
@@ -219,7 +219,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                                     )}
                                 </div>
                                 <div className="bg-gray-50 dark:bg-brand-primary/50 py-2 px-3 w-full border-t border-gray-100 dark:border-gray-700/50">
-                                    <p className="font-extrabold text-sm sm:text-lg text-brand-accent truncate">
+                                    <p className="wrap-anywhere font-extrabold text-sm sm:text-lg text-brand-accent">
                                         {formatCurrency(product.price, currency)}
                                     </p>
                                 </div>
@@ -238,11 +238,11 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
             <div className={`
                 fixed inset-0 z-40 bg-white dark:bg-brand-secondary flex flex-col
                 transition-transform duration-300 ease-in-out
-                md:static md:w-96 md:border-l md:border-gray-200 md:dark:border-gray-700 md:translate-y-0 md:z-auto order-2 md:order-2
-                ${isMobileCartOpen ? 'translate-y-0' : 'translate-y-full md:translate-y-0'}
+                min-h-0 lg:static lg:w-80 xl:w-96 lg:shrink-0 lg:border-l lg:border-gray-200 lg:dark:border-gray-700 lg:translate-y-0 lg:z-auto order-2 lg:order-2
+                ${isMobileCartOpen ? 'translate-y-0 visible' : 'translate-y-full invisible pointer-events-none lg:translate-y-0 lg:visible lg:pointer-events-auto'}
             `}>
                 {/* Mobile Header */}
-                <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 md:hidden bg-gray-50 dark:bg-brand-primary">
+                <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 lg:hidden bg-gray-50 dark:bg-brand-primary">
                     <h2 className="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
                         <StorefrontIcon className="w-5 h-5"/>
                         {t('posPage.orderSummary')}
@@ -257,7 +257,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                 </div>
 
                 {/* Desktop Header */}
-                <div className="hidden md:flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-brand-primary">
+                <div className="hidden lg:flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-brand-primary">
                     <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
                         <StorefrontIcon className="w-5 h-5"/>
                         {t('posPage.orderSummary')}
@@ -284,7 +284,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                                     </div>
                                     <button onClick={() => updateQuantity(item.id, 0)} className="text-gray-400 hover:text-red-500 p-1" aria-label="Remove item"><DeleteIcon className="w-4 h-4"/></button>
                                 </div>
-                                <div className="flex justify-between items-center bg-white dark:bg-brand-secondary p-1 rounded-lg">
+                                <div className="flex flex-wrap gap-2 justify-between items-center bg-white dark:bg-brand-secondary p-1 rounded-lg">
                                     <div className="flex items-center gap-1">
                                         <button 
                                             onClick={() => updateQuantity(item.id, item.quantity - 1)} 
@@ -302,7 +302,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                                             +
                                         </button>
                                     </div>
-                                    <span className="font-bold text-gray-900 dark:text-white mr-2">{formatCurrency(item.price * item.quantity, currency)}</span>
+                                    <span className="wrap-anywhere font-bold text-gray-900 dark:text-white mr-2">{formatCurrency(item.price * item.quantity, currency)}</span>
                                 </div>
                             </div>
                         ))
@@ -316,7 +316,7 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
                             <span>{t('posPage.subtotal')}</span>
                             <span>{formatCurrency(total, currency)}</span>
                         </div>
-                         <div className="flex justify-between text-2xl font-extrabold text-gray-900 dark:text-white">
+                         <div className="flex flex-wrap gap-2 justify-between text-2xl font-extrabold text-gray-900 dark:text-white">
                             <span>{t('posPage.total')}</span>
                             <span>{formatCurrency(total, currency)}</span>
                         </div>
@@ -334,16 +334,16 @@ const PosPage: React.FC<PosPageProps> = ({ products, currency, onCharge, onNavig
 
             {/* --- MOBILE BOTTOM BAR (Trigger for Cart) --- */}
             {!isMobileCartOpen && cart.length > 0 && (
-                <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-brand-secondary border-t border-gray-200 dark:border-gray-700 p-4 pb-safe z-30 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-brand-secondary border-t border-gray-200 dark:border-gray-700 p-4 pb-safe z-30 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
                     <button 
                         onClick={() => setIsMobileCartOpen(true)}
-                        className="w-full bg-brand-accent text-white font-bold py-3 rounded-xl flex justify-between items-center px-4 shadow-lg active:scale-95 transition-transform"
+                        className="w-full bg-brand-accent text-white font-bold py-3 rounded-xl flex flex-wrap gap-2 justify-between items-center px-4 shadow-lg active:scale-95 transition-transform"
                     >
                         <div className="flex items-center gap-2">
                             <span className="bg-white/20 px-2 py-0.5 rounded text-sm font-extrabold">{cartCount}</span>
                             <span>View Cart</span>
                         </div>
-                        <span className="text-lg">{formatCurrency(total, currency)}</span>
+                        <span className="wrap-anywhere text-right text-base sm:text-lg">{formatCurrency(total, currency)}</span>
                     </button>
                 </div>
             )}

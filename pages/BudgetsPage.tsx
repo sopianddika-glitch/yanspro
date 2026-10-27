@@ -107,7 +107,7 @@ const BudgetsPage: React.FC<BudgetsPageProps> = ({ budgets, categories, transact
     return (
         <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 dark:bg-brand-primary min-h-full">
             <div className="flex flex-col gap-4 sm:flex-row justify-between sm:items-center mb-6">
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">{t('budgetsPage.title')}</h1>
+                <h1 className="text-2xl sm:wrap-anywhere text-3xl font-bold text-gray-800 dark:text-gray-100">{t('budgetsPage.title')}</h1>
                 <button
                     onClick={() => handleOpenModal()}
                     className="flex items-center justify-center gap-2 bg-brand-accent hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 shadow-md"
@@ -128,15 +128,15 @@ const BudgetsPage: React.FC<BudgetsPageProps> = ({ budgets, categories, transact
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
                             <div>
                                 <p className="text-xs uppercase font-bold opacity-70">Total Budgeted</p>
-                                <p className="text-3xl font-bold">{formatCurrency(summary.totalBudgeted, currency)}</p>
+                                <p className="wrap-anywhere text-3xl font-bold">{formatCurrency(summary.totalBudgeted, currency)}</p>
                             </div>
                             <div>
                                 <p className="text-xs uppercase font-bold opacity-70">Total Spent</p>
-                                <p className="text-3xl font-bold">{formatCurrency(summary.totalSpent, currency)}</p>
+                                <p className="wrap-anywhere text-3xl font-bold">{formatCurrency(summary.totalSpent, currency)}</p>
                             </div>
                             <div>
                                 <p className="text-xs uppercase font-bold opacity-70">Remaining</p>
-                                <p className="text-3xl font-bold">{formatCurrency(summary.totalRemaining, currency)}</p>
+                                <p className="wrap-anywhere text-3xl font-bold">{formatCurrency(summary.totalRemaining, currency)}</p>
                             </div>
                         </div>
                         <div className="mt-6 relative z-10">
@@ -176,8 +176,8 @@ const BudgetsPage: React.FC<BudgetsPageProps> = ({ budgets, categories, transact
                             return (
                                 <div key={budget.id} className="bg-white dark:bg-brand-secondary p-5 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-gray-100 dark:border-gray-800">
                                     <div>
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div className="flex items-center gap-3">
+                                        <div className="flex flex-wrap gap-2 justify-between items-start mb-2">
+                                            <div className="flex min-w-0 items-center gap-3">
                                                 <div className={`p-2 rounded-lg ${isOverBudget ? 'bg-red-100 text-red-600 dark:bg-red-900/20' : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20'}`}>
                                                     <BudgetIcon className="w-5 h-5" />
                                                 </div>

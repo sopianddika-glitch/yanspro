@@ -188,7 +188,7 @@ const CashFlowForecastChart: React.FC<CashFlowForecastChartProps> = ({ transacti
 
             <div className="responsive-chart mt-6">
                 <div className="responsive-chart-inner">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 320, height: 288 }}>
                         <AreaChart data={chartData} margin={{ top: 10, right: 12, left: 0, bottom: 8 }}>
                         <defs>
                             <linearGradient id="historicalForecastFill" x1="0" y1="0" x2="0" y2="1">

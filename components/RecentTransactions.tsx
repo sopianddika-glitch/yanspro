@@ -59,12 +59,12 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions, c
             <div className="md:hidden space-y-3">
                 {sortedTransactions.map((transaction) => (
                     <div key={transaction.id} className="p-3 rounded-lg bg-gray-50 dark:bg-brand-primary border border-gray-200 dark:border-gray-700">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-3">
+                        <div className="flex flex-wrap justify-between items-center gap-3">
+                            <div className="flex min-w-0 flex-1 items-center gap-3">
                                 <div className="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700">
                                     {transaction.type === TransactionType.INCOME ? <ArrowUpIcon className="h-4 w-4 text-brand-green" /> : <ArrowDownIcon className="h-4 w-4 text-brand-red" />}
                                 </div>
-                                <div>
+                                <div className="wrap-anywhere">
                                     <p className="font-semibold text-sm text-gray-900 dark:text-gray-100">{transaction.description}</p>
                                     <p className="text-xs text-gray-500 dark:text-brand-muted">{transaction.category}</p>
                                 </div>

@@ -62,7 +62,7 @@ const EnterprisePage: React.FC<EnterprisePageProps> = ({ transactions, summary, 
                 <div className="bg-white dark:bg-brand-secondary p-6 rounded-xl shadow-md border-t-4 border-purple-500 flex flex-col justify-between">
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{t('enterprise.metrics.valuation')}</p>
-                        <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{formatCurrency(metrics.valuation)}</p>
+                        <p className="wrap-anywhere text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mt-1">{formatCurrency(metrics.valuation)}</p>
                     </div>
                     <div className="mt-4 text-xs text-gray-400">
                         {t('enterprise.metrics.valuationNote')}
@@ -73,14 +73,14 @@ const EnterprisePage: React.FC<EnterprisePageProps> = ({ transactions, summary, 
                 <div className="bg-white dark:bg-brand-secondary p-6 rounded-xl shadow-md border-t-4 border-blue-500 flex flex-col justify-between">
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{t('enterprise.metrics.runway')}</p>
-                        <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
+                        <p className="wrap-anywhere text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mt-1">
                             {metrics.runwayMonths >= 99 ? '∞' : metrics.runwayMonths.toFixed(1)} <span className="text-lg font-medium text-gray-500">{t('enterprise.metrics.months')}</span>
                         </p>
                     </div>
                     <div className="mt-4">
-                        <div className="flex justify-between text-xs text-gray-500 mb-1">
+                        <div className="flex flex-wrap gap-1 justify-between text-xs text-gray-500 mb-1">
                             <span>{t('enterprise.metrics.burnRate')}</span>
-                            <span className="font-mono text-red-500">-{formatCurrency(metrics.burnRate)}/mo</span>
+                            <span className="wrap-anywhere font-mono text-red-500">-{formatCurrency(metrics.burnRate)}/mo</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                             <div 
@@ -111,7 +111,7 @@ const EnterprisePage: React.FC<EnterprisePageProps> = ({ transactions, summary, 
                 <div className="bg-white dark:bg-brand-secondary p-6 rounded-xl shadow-md border-t-4 border-orange-500 flex flex-col justify-between">
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{t('enterprise.metrics.ebitda')}</p>
-                        <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{formatCurrency(metrics.ebitdaEst)}</p>
+                        <p className="wrap-anywhere text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white mt-1">{formatCurrency(metrics.ebitdaEst)}</p>
                     </div>
                     <div className="mt-4 flex items-center gap-1 text-xs text-green-500">
                         <TrendingUpIcon className="w-4 h-4" />

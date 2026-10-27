@@ -40,13 +40,13 @@ const NotificationToast: React.FC<NotificationToastProps> = ({ notification, onC
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 animate-slide-in-up">
-            <div className={`${bgColors[notification.type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px]`}>
+        <div role="status" className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 left-4 sm:left-auto sm:max-w-md z-50 animate-slide-in-up">
+            <div className={`${bgColors[notification.type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-0`}>
                 <div className="flex-shrink-0">
                     {icons[notification.type]}
                 </div>
-                <p className="font-medium text-sm flex-grow">{notification.message}</p>
-                <button onClick={onClose} className="text-white/80 hover:text-white transition-colors">
+                <p className="wrap-anywhere font-medium text-sm flex-grow">{notification.message}</p>
+                <button onClick={onClose} aria-label="Close notification" className="flex-shrink-0 p-2 text-white/80 hover:text-white transition-colors">
                     <XIcon className="w-4 h-4" />
                 </button>
             </div>
