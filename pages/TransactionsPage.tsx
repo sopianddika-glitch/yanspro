@@ -1,9 +1,10 @@
 
 import React, { useState, useMemo } from 'react';
 import { Transaction, TransactionType } from '../types';
-import { AddIcon, ArrowDownIcon, ArrowUpIcon, ExportIcon, DeleteIcon, CameraIcon, InvoiceIcon, SortIcon, FilterIcon, EditIcon, RepeatIcon } from '../components/Icons';
+import { AddIcon, ArrowDownIcon, ArrowUpIcon, ExportIcon, DeleteIcon, CameraIcon, InvoiceIcon, SortIcon, FilterIcon, EditIcon, RepeatIcon, PrintIcon } from '../components/Icons';
 import TransactionDeleteButton from '../components/TransactionDeleteButton';
 import { useI18n } from '../hooks/useI18n';
+import { documentText } from '../utils/documentText';
 
 interface TransactionsPageProps {
     transactions: Transaction[];
@@ -20,14 +21,15 @@ interface TransactionsPageProps {
     onGenerateInvoice: (transactions: Transaction[]) => void;
     onEditTransaction: (transaction: Transaction) => void;
     onViewAudit: (transactionId: string) => void;
+    onPrintReceipt: (transaction: Transaction) => void;
 }
 
 const TransactionsPage: React.FC<TransactionsPageProps> = ({ 
     transactions, currency, profileSettings,
     onAddTransactionClick, onDeleteTransactions, onRestoreTransaction, onAddFromReceiptClick, 
-    onNavigateToInvoice, onGenerateInvoice, onEditTransaction, onViewAudit 
+    onNavigateToInvoice, onGenerateInvoice, onEditTransaction, onViewAudit, onPrintReceipt
 }) => {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
     const [filterType, setFilterType] = useState<TransactionType | 'all'>('all');
     const [searchTerm, setSearchTerm] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -434,6 +436,7 @@ const TransactionsPage: React.FC<TransactionsPageProps> = ({
                                                 </button>
                                             ) : (
                                                 <>
+                                                    <button type="button" onClick={()=>onPrintReceipt(transaction)} aria-label={documentText(locale).printReceipt} title={documentText(locale).printReceipt} className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-brand-accent dark:hover:bg-gray-800"><PrintIcon className="h-4 w-4"/></button>
                                                     {allowEdit && (
                                                         <button onClick={(e) => { e.stopPropagation(); onEditTransaction(transaction); }} className="text-brand-accent hover:text-blue-400 p-2 mr-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
                                                             <EditIcon />
@@ -492,6 +495,7 @@ const TransactionsPage: React.FC<TransactionsPageProps> = ({
                                             <button onClick={(e) => handleRestoreOne(transaction.id, e)} className="text-brand-green hover:text-green-400 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" title="Restore"><RepeatIcon className="w-5 h-5"/></button>
                                         ) : (
                                             <>
+                                                <button type="button" onClick={()=>onPrintReceipt(transaction)} aria-label={documentText(locale).printReceipt} title={documentText(locale).printReceipt} className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-brand-accent dark:hover:bg-gray-800"><PrintIcon className="h-4 w-4"/></button>
                                                 {allowEdit && (
                                                     <button onClick={(e) => { e.stopPropagation(); onEditTransaction(transaction); }} className="text-brand-accent hover:text-blue-400 p-2 mr-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"><EditIcon className="w-5 h-5" /></button>
                                                 )}

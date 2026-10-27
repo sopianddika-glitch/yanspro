@@ -18,6 +18,9 @@ import ProductsPage from './pages/ProductsPage';
 import AddProductModal from './components/AddProductModal';
 import PosPage from './pages/PosPage';
 import PaymentModal from './components/PaymentModal';
+import ReceiptReadyModal from './components/ReceiptReadyModal';
+import { exportReceipt } from './utils/exportReceipt';
+import { documentText } from './utils/documentText';
 import ClientSelectorModal from './components/ClientSelectorModal';
 import ChatAssistantButton from './components/ChatAssistantButton';
 import ChatAssistantModal from './components/ChatAssistantModal';
@@ -146,6 +149,8 @@ const App: React.FC = () => {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [saleReceipt, setSaleReceipt] = useState<{ transaction: Transaction; profile: Profile } | null>(null);
+    const closeSaleReceipt = useCallback(() => setSaleReceipt(null), []);
     const [posSaleInfo, setPosSaleInfo] = useState<{ cart: CartItem[], total: number } | null>(null);
     const [isClientSelectorOpen, setIsClientSelectorOpen] = useState(false);
     const [transactionsToInvoice, setTransactionsToInvoice] = useState<Transaction[]>([]);
@@ -898,6 +903,11 @@ const App: React.FC = () => {
         const saleTransaction: Omit<Transaction, 'id'> = {
             date: new Date().toISOString(), description, amount: total,
             type: TransactionType.INCOME, category: 'Product Sales',
+            receipt: {
+                currency: activeProfile.currency,
+                business: { name: activeProfile.name, address: activeProfile.address, phone: activeProfile.phone, email: activeProfile.email, website: activeProfile.website, taxId: activeProfile.taxId },
+                items: cart.map(item => ({ description: item.name, quantity: item.quantity, unitPrice: item.price, sku: item.sku })),
+            },
         };
         
         const fullTransaction = { ...saleTransaction, id: new Date().toISOString() + Math.random() };
@@ -909,10 +919,17 @@ const App: React.FC = () => {
             auditLog: newAuditLog
         });
         
+        setSaleReceipt({ transaction: fullTransaction, profile: { ...activeProfile } });
         setIsPaymentModalOpen(false); setPosSaleInfo(null);
         showNotification('success', 'Sale completed successfully!');
-    }, [posSaleInfo, activeProfileId, transactions, products, setDataForProfile, showNotification, logAudit]);
+    }, [posSaleInfo, activeProfileId, activeProfile, transactions, products, setDataForProfile, showNotification, logAudit]);
     
+    const handlePrintReceipt = useCallback((transaction: Transaction) => {
+        if (!exportReceipt(transaction, activeProfile, locale, clients.find(client=>client.id===transaction.clientId))) {
+            showNotification('error', documentText(locale).popupError);
+        }
+    }, [activeProfile, locale, clients, showNotification]);
+
     const handleSaveClient = useCallback((clientData: Omit<Client, 'id' | 'createdAt'>, clientId?: string) => {
         if (clientId) {
             const existing = clients.find(c => c.id === clientId);
@@ -1021,9 +1038,10 @@ const App: React.FC = () => {
                     onGenerateInvoice={handleOpenClientSelectorForInvoice}
                     onEditTransaction={handleOpenEditTransactionModal}
                     onViewAudit={(id) => setAuditTransactionId(id)}
+                    onPrintReceipt={handlePrintReceipt}
                 />;
             case 'reports':
-                return <ReportsPage transactions={transactions} summary={financialSummary} currency={activeProfile.currency} />;
+                return <ReportsPage transactions={transactions} profile={activeProfile} />;
             case 'settings':
                 return <SettingsPage categories={categories} onAddCategory={handleAddCategory} onUpdateCategory={handleUpdateCategory} onDeleteCategory={handleDeleteCategory} recurringTransactions={recurringTransactions} onDeleteRecurringTransaction={handleDeleteRecurringTransaction} onOpenRecurringModal={handleOpenRecurringModal} profiles={profiles} activeProfileId={activeProfileId} onAddProfile={handleAddProfile} onUpdateProfile={handleUpdateProfile} onDeleteProfile={handleDeleteProfile} onExportData={handleExportData} onResetProfileData={handleResetProfileData} onOpenImportModal={handleOpenImportModal} locale={locale} onSetLocale={setLocale} />;
             case 'budgets':
@@ -1035,7 +1053,7 @@ const App: React.FC = () => {
                     onSave={handleSaveInvoice}
                     onBack={() => setCurrentPage('invoices')}
                     existingInvoice={editingInvoiceId ? invoices.find(i => i.id === editingInvoiceId) : undefined}
-                    currency={activeProfile.currency} profile={activeProfile} products={products}
+                    currency={activeProfile.currency} profile={activeProfile} products={products} clients={clients}
                     onDelete={handleDeleteInvoiceFromEditor}
                 />;
             case 'goals':
@@ -1056,7 +1074,7 @@ const App: React.FC = () => {
             default:
                 return <Dashboard transactions={transactions} invoices={invoices} recurringTransactions={recurringTransactions} budgets={budgets} categories={categories} summary={financialSummary} activeProfile={activeProfile} onAddTransactionClick={handleOpenAddTransaction} onAddFromReceiptClick={handleOpenScanner} onNavigateToInvoice={handleNavigateToInvoice} onNavigateToSettings={() => handleNavigate('settings')} onNavigate={handleNavigate} theme={theme} onOpenInstallModal={handleOpenInstallModal} />;
         }
-    }, [currentPage, transactions, invoices, financialSummary, activeProfile, handleOpenAddTransaction, handleOpenScanner, handleNavigateToInvoice, theme, handleDeleteTransactions, handleAddCategory, handleUpdateCategory, handleDeleteCategory, recurringTransactions, handleDeleteRecurringTransaction, handleOpenRecurringModal, profiles, activeProfileId, handleAddProfile, handleUpdateProfile, handleDeleteProfile, handleExportData, handleResetProfileData, budgets, categories, handleOpenBudgetModal, handleUpdateBudget, handleDeleteBudget, handleDeleteInvoice, handleSaveInvoice, editingInvoiceId, locale, goals, handleOpenGoalModal, handleDeleteGoal, handleOpenFundsModal, products, handleOpenProductModal, handleDeleteProduct, handleCharge, handleNavigateToInvoiceFromTransaction, handleNavigate, handleOpenClientSelectorForInvoice, handleOpenInstallModal, handleOpenImportModal, clients, handleOpenClientModal, handleUpdateClient, handleDeleteClient, handleOpenEditTransactionModal, handleDeleteInvoiceFromEditor, handleRestoreTransaction]);
+    }, [currentPage, transactions, invoices, financialSummary, activeProfile, handleOpenAddTransaction, handleOpenScanner, handleNavigateToInvoice, theme, handleDeleteTransactions, handleAddCategory, handleUpdateCategory, handleDeleteCategory, recurringTransactions, handleDeleteRecurringTransaction, handleOpenRecurringModal, profiles, activeProfileId, handleAddProfile, handleUpdateProfile, handleDeleteProfile, handleExportData, handleResetProfileData, budgets, categories, handleOpenBudgetModal, handleUpdateBudget, handleDeleteBudget, handleDeleteInvoice, handleSaveInvoice, editingInvoiceId, locale, goals, handleOpenGoalModal, handleDeleteGoal, handleOpenFundsModal, products, handleOpenProductModal, handleDeleteProduct, handleCharge, handleNavigateToInvoiceFromTransaction, handleNavigate, handleOpenClientSelectorForInvoice, handleOpenInstallModal, handleOpenImportModal, clients, handleOpenClientModal, handleUpdateClient, handleDeleteClient, handleOpenEditTransactionModal, handleDeleteInvoiceFromEditor, handleRestoreTransaction, handlePrintReceipt]);
 
     if (isDataLoading) {
         return (
@@ -1099,6 +1117,7 @@ const App: React.FC = () => {
                 
                 <AddBudgetModal isOpen={isAddBudgetModalOpen} onClose={() => setIsAddBudgetModalOpen(false)} onAddBudget={handleAddBudget} onUpdateBudget={handleUpdateBudget} onDelete={handleDeleteBudget} categories={categories} transactions={transactions} existingBudget={editingBudget} currency={activeProfile.currency} />
 
+                {saleReceipt && <ReceiptReadyModal receipt={saleReceipt} onClose={closeSaleReceipt} />}
                 {posSaleInfo && (
                     <PaymentModal isOpen={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)} onConfirm={handleConfirmSale} total={posSaleInfo.total} currency={activeProfile.currency} />
                 )}

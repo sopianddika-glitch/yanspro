@@ -1,0 +1,23 @@
+import React from 'react';
+import { Profile, SupportedLocale, TransactionType } from '../types';
+import BusinessDocument, { documentDate } from './BusinessDocument';
+import { documentText } from '../utils/documentText';
+import { formatCurrency, getLocaleCode } from '../utils/intl';
+import { ReportData, ReportType } from '../utils/reportData';
+
+export default function ReportDocument({ profile, locale, kind, data, includeLedger, generatedAt }: { profile: Profile; locale: SupportedLocale; kind: ReportType; data: ReportData; includeLedger: boolean; generatedAt?: Date }) {
+    const text = documentText(locale);
+    const money = (value: number) => formatCurrency(value,profile.currency,locale);
+    const title = text.reportNames[kind];
+    const range = data.start && data.end ? `${documentDate(data.start,locale)} - ${documentDate(data.end,locale)}` : text.all;
+    const categoryGroups = kind === 'income' ? data.incomeGroups : data.expenseGroups;
+    return <BusinessDocument profile={profile} locale={locale} title={title} reference={`RPT-${kind.toUpperCase()}-${data.start||'ALL'}-${data.end||'ALL'}`} metadata={[{label:text.period,value:range},{label:text.count,value:String(data.entries.length)}]} generatedAt={generatedAt}>
+        <div className="document-metrics">{[{label:text.revenue,value:data.revenue},{label:text.expenses,value:data.expenses},{label:text.net,value:data.net}].map(item=><div className="document-metric" key={item.label}><span>{item.label}</span><strong>{money(item.value)}</strong></div>)}</div>
+        {(data.entries.length === 0 || ((kind==='income'||kind==='expenses') && categoryGroups.length===0)) ? <p className="document-empty">{text.noRecords}</p> : <>
+            {(kind==='income'||kind==='expenses') ? <table className="document-table"><colgroup><col style={{width:'48%'}}/><col style={{width:'32%'}}/><col style={{width:'20%'}}/></colgroup><thead><tr><th>{kind==='income'?text.reportNames.income:text.category}</th><th className="numeric">{text.amount} ({profile.currency})</th><th className="numeric">{text.share}</th></tr></thead><tbody>{categoryGroups.map(item=><tr key={item.category}><td>{item.category}</td><td className="numeric">{money(item.amount)}</td><td className="numeric">{new Intl.NumberFormat(getLocaleCode(locale),{maximumFractionDigits:2}).format(item.share)}%</td></tr>)}</tbody></table> : kind==='cash' ? <table className="document-table"><colgroup><col style={{width:'60%'}}/><col style={{width:'40%'}}/></colgroup><thead><tr><th>{text.description}</th><th className="numeric">{text.amount} ({profile.currency})</th></tr></thead><tbody>{[{label:text.opening,value:data.opening},{label:text.revenue,value:data.revenue},{label:text.expenses,value:-data.expenses},{label:text.net,value:data.net},{label:text.closing,value:data.closing}].map(item=><tr key={item.label}><td>{item.label}</td><td className="numeric">{money(item.value)}</td></tr>)}</tbody></table> : <table className="document-table"><colgroup><col style={{width:'19%'}}/><col style={{width:'49%'}}/><col style={{width:'32%'}}/></colgroup><thead><tr><th>{text.type}</th><th>{text.category}</th><th className="numeric">{text.amount} ({profile.currency})</th></tr></thead><tbody>{[...data.incomeGroups.map(item=>({...item,type:text.income})),...data.expenseGroups.map(item=>({...item,type:text.expense}))].map((item,index)=><tr key={index}><td>{item.type}</td><td>{item.category}</td><td className="numeric">{money(item.amount)}</td></tr>)}</tbody></table>}
+        </>}
+        <p className="document-note">{kind==='annual'?text.annualBasis:kind==='cash'||kind==='snapshot'?text.cashBasis:text.basis}</p>
+        {data.invalidCount>0 && <p className="document-note">{text.invalidRecords}: {data.invalidCount}</p>}
+        {includeLedger && data.entries.length>0 && <section className="document-section"><h3>{text.ledger}</h3><table className="document-table"><colgroup><col style={{width:'16%'}}/><col style={{width:'39%'}}/><col style={{width:'17%'}}/><col style={{width:'28%'}}/></colgroup><thead><tr><th>{text.date}</th><th>{text.description}</th><th>{text.type}</th><th className="numeric">{text.amount} ({profile.currency})</th></tr></thead><tbody>{data.entries.map(item=><tr key={item.id}><td>{documentDate(item.date,locale)}</td><td>{item.description}<span className="secondary">{item.category}</span><span className="secondary document-reference">{item.id}</span></td><td>{item.type===TransactionType.INCOME?text.income:text.expense}</td><td className="numeric">{money(item.type===TransactionType.INCOME?item.amount:-item.amount)}</td></tr>)}</tbody></table></section>}
+    </BusinessDocument>;
+}

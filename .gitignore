@@ -24,3 +24,6 @@ Thumbs.db
 # Local browser audit artifacts
 .playwright-cli/
 output/
+
+# Intermediate PDF render evidence
+tmp/pdfs/

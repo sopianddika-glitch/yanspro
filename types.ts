@@ -18,6 +18,12 @@ export enum InvoiceStatus {
     OVERDUE = 'Overdue',
 }
 
+export interface ReceiptSnapshot {
+  currency: string;
+  business: Pick<Profile, 'name' | 'address' | 'phone' | 'email' | 'website' | 'taxId'>;
+  items: { description: string; quantity: number; unitPrice: number; sku?: string }[];
+}
+
 export interface Transaction {
   id: string;
   date: string; // ISO string format YYYY-MM-DDTHH:mm:ssZ
@@ -28,6 +34,7 @@ export interface Transaction {
   recurringTransactionId?: string;
   invoiceId?: string;
   productId?: string;
+  receipt?: ReceiptSnapshot;
   clientId?: string;
   // New fields for Audit/Soft Delete
   deletedAt?: string | null; 

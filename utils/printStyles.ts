@@ -1,346 +1,56 @@
+// Self-contained print styles: no network fonts or application theme required.
 export const PRINT_DOCUMENT_STYLES = `
-  :root {
-    color-scheme: light;
-    font-family: "Segoe UI", Inter, system-ui, sans-serif;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    padding: 32px;
-    background: #ffffff;
-    color: #111827;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .print-shell {
-    max-width: 1024px;
-    margin: 0 auto;
-  }
-
-  .print-header {
-    border-bottom: 2px solid #d1d5db;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-  }
-
-  .print-header h1,
-  .print-shell h1,
-  .print-shell h2,
-  .print-shell h3,
-  .print-shell h4,
-  .print-shell p {
-    margin: 0;
-  }
-
-  .print-shell table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .print-shell th,
-  .print-shell td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e5e7eb;
-    vertical-align: top;
-  }
-
-  .print-shell th {
-    text-align: left;
-    background: #f9fafb;
-    color: #4b5563;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .print-shell button {
-    display: none !important;
-  }
-
-  .print-shell .grid {
-    display: grid;
-  }
-
-  .print-shell .grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-
-  .print-shell .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .print-shell .grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .print-shell .gap-4 {
-    gap: 16px;
-  }
-
-  .print-shell .gap-6 {
-    gap: 24px;
-  }
-
-  .print-shell .gap-8 {
-    gap: 32px;
-  }
-
-  .print-shell .flex {
-    display: flex;
-  }
-
-  .print-shell .justify-between {
-    justify-content: space-between;
-  }
-
-  .print-shell .justify-end {
-    justify-content: flex-end;
-  }
-
-  .print-shell .items-center {
-    align-items: center;
-  }
-
-  .print-shell .w-full {
-    width: 100%;
-  }
-
-  .print-shell .max-w-xs {
-    max-width: 320px;
-  }
-
-  .print-shell .rounded-lg,
-  .print-shell .rounded-xl {
-    border-radius: 12px;
-  }
-
-  .print-shell .border,
-  .print-shell .border-t,
-  .print-shell .border-b,
-  .print-shell .border-b-2 {
-    border-color: #e5e7eb;
-  }
-
-  .print-shell .border,
-  .print-shell .border-t,
-  .print-shell .border-b {
-    border-style: solid;
-    border-width: 1px;
-  }
-
-  .print-shell .border-b-2 {
-    border-style: solid;
-    border-bottom-width: 2px;
-  }
-
-  .print-shell .border-t {
-    border-width: 0;
-    border-top-width: 1px;
-  }
-
-  .print-shell .border-b {
-    border-width: 0;
-    border-bottom-width: 1px;
-  }
-
-  .print-shell .p-4 {
-    padding: 16px;
-  }
-
-  .print-shell .p-8 {
-    padding: 32px;
-  }
-
-  .print-shell .px-4 {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .print-shell .py-3 {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  .print-shell .py-4 {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-
-  .print-shell .pb-2 {
-    padding-bottom: 8px;
-  }
-
-  .print-shell .pb-8 {
-    padding-bottom: 32px;
-  }
-
-  .print-shell .pt-2 {
-    padding-top: 8px;
-  }
-
-  .print-shell .pt-8 {
-    padding-top: 32px;
-  }
-
-  .print-shell .mt-1 {
-    margin-top: 4px;
-  }
-
-  .print-shell .mt-2 {
-    margin-top: 8px;
-  }
-
-  .print-shell .mt-4 {
-    margin-top: 16px;
-  }
-
-  .print-shell .mt-12 {
-    margin-top: 48px;
-  }
-
-  .print-shell .mb-2 {
-    margin-bottom: 8px;
-  }
-
-  .print-shell .mb-4 {
-    margin-bottom: 16px;
-  }
-
-  .print-shell .mb-12 {
-    margin-bottom: 48px;
-  }
-
-  .print-shell .space-y-1 > * + * {
-    margin-top: 4px;
-  }
-
-  .print-shell .space-y-2 > * + * {
-    margin-top: 8px;
-  }
-
-  .print-shell .space-y-3 > * + * {
-    margin-top: 12px;
-  }
-
-  .print-shell .text-left {
-    text-align: left;
-  }
-
-  .print-shell .text-right {
-    text-align: right;
-  }
-
-  .print-shell .text-center {
-    text-align: center;
-  }
-
-  .print-shell .text-xs {
-    font-size: 12px;
-  }
-
-  .print-shell .text-sm {
-    font-size: 14px;
-  }
-
-  .print-shell .text-lg {
-    font-size: 18px;
-  }
-
-  .print-shell .text-xl {
-    font-size: 20px;
-  }
-
-  .print-shell .text-2xl {
-    font-size: 24px;
-  }
-
-  .print-shell .text-3xl {
-    font-size: 30px;
-  }
-
-  .print-shell .text-4xl {
-    font-size: 36px;
-  }
-
-  .print-shell .font-medium {
-    font-weight: 500;
-  }
-
-  .print-shell .font-semibold {
-    font-weight: 600;
-  }
-
-  .print-shell .font-bold {
-    font-weight: 700;
-  }
-
-  .print-shell .font-mono {
-    font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-  }
-
-  .print-shell .uppercase {
-    text-transform: uppercase;
-  }
-
-  .print-shell .tracking-wider {
-    letter-spacing: 0.08em;
-  }
-
-  .print-shell .bg-white {
-    background: #ffffff;
-  }
-
-  .print-shell .bg-gray-50 {
-    background: #f9fafb;
-  }
-
-  .print-shell .bg-gray-100 {
-    background: #f3f4f6;
-  }
-
-  .print-shell .text-gray-400 {
-    color: #9ca3af;
-  }
-
-  .print-shell .text-gray-500 {
-    color: #6b7280;
-  }
-
-  .print-shell .text-gray-600 {
-    color: #4b5563;
-  }
-
-  .print-shell .text-gray-700 {
-    color: #374151;
-  }
-
-  .print-shell .text-gray-800 {
-    color: #1f2937;
-  }
-
-  .print-shell .text-gray-900 {
-    color: #111827;
-  }
-
-  .print-shell .text-green-600,
-  .print-shell .text-brand-green {
-    color: #2da44e;
-  }
-
-  .print-shell .text-red-600,
-  .print-shell .text-brand-red {
-    color: #e5534b;
-  }
-
-  @media print {
-    body {
-      padding: 0;
-    }
-  }
+  @page { size: A4; margin: 16mm 14mm 18mm;
+    @bottom-left { content: "Yans Pro"; font: 8pt Arial, sans-serif; color: #64748b; }
+    @bottom-right { content: counter(page) " / " counter(pages); font: 8pt Arial, sans-serif; color: #64748b; }
+  }
+  :root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; color: #172b4d; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #eef2f6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  button { font: inherit; cursor: pointer; }
+  .print-toolbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: #10243a; color: white; padding: 14px 20px; }
+  .print-toolbar p { flex: 1 1 280px; margin: 0; font-size: 9pt; line-height: 1.5; }
+  .print-toolbar button { border: 1px solid #718096; border-radius: 7px; background: white; color: #10243a; padding: 10px 16px; font-weight: 600; }
+  .print-shell { max-width: 210mm; margin: 20px auto; padding: 16mm 14mm; background: white; box-shadow: 0 3px 24px #10243a15; }
+  .business-document { line-height: 1.5; overflow-wrap: anywhere; }
+  .business-document h1, .business-document h2, .business-document h3, .business-document p { margin: 0; }
+  .document-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 24px; border-top: 5px solid #163953; border-bottom: 1px solid #cbd5e1; padding: 20px 0 22px; margin-bottom: 22px; break-inside: avoid; }
+  .business-name { font-size: 21pt; line-height: 1.15; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px !important; }
+  .business-contact { font-size: 9pt; color: #526175; white-space: pre-line; }
+  .document-heading { text-align: right; }
+  .document-heading h2 { font-size: 17pt; font-weight: 650; line-height: 1.2; color: #163953; margin-bottom: 10px; }
+  .document-badge { display: inline-block; border: 1px solid #cbd5e1; border-radius: 4px; padding: 3px 8px; font-size: 8pt; font-weight: 700; letter-spacing: 0.5px; background: #f1f5f9; }
+  .document-badge.paid { color: #116149; background: #ecfdf5; border-color: #a7dac8; }
+  .document-meta { display: grid; gap: 4px; margin-top: 12px; font-size: 8.5pt; }
+  .document-meta dt { color: #64748b; }
+  .document-meta dd { margin: 0; font-weight: 600; }
+  .document-meta > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 10px; }
+  .document-reference { font-family: Consolas, monospace; font-size: 8pt; }
+  .document-section { margin: 18px 0; }
+  .document-section h3, .document-kicker { font-size: 8pt; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #64748b; margin-bottom: 7px !important; }
+  .document-recipient { padding: 14px 16px; border-left: 3px solid #248a8a; background: #f6f9fb; margin: 20px 0; break-inside: avoid; }
+  .document-recipient strong { display: block; font-size: 12pt; }
+  .document-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 18px 0; font-size: 9pt; }
+  .document-table thead { display: table-header-group; }
+  .document-table th { background: #163953; color: white; font-size: 8pt; font-weight: 600; text-align: left; padding: 10px 9px; vertical-align: bottom; }
+  .document-table td { border-bottom: 1px solid #dce4ec; padding: 11px 9px; vertical-align: top; }
+  .document-table tbody tr:nth-child(even) { background: #f8fafc; }
+  .document-table tr { break-inside: avoid; }
+  .document-table .numeric, .numeric { text-align: right; font-variant-numeric: tabular-nums; }
+  .document-table .secondary { display: block; color: #64748b; font-size: 7.5pt; margin-top: 3px; }
+  .document-totals { width: min(100%, 88mm); margin: 20px 0 20px auto; break-inside: avoid; }
+  .document-total-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 15px; padding: 8px 0; border-bottom: 1px solid #dce4ec; }
+  .document-total-row strong, .document-total-row span:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .document-total-row.grand { padding: 12px; background: #163953; color: white; font-size: 12pt; font-weight: 700; border-radius: 4px; }
+  .document-notes { white-space: pre-wrap; color: #526175; font-size: 9pt; border-top: 1px solid #dce4ec; padding-top: 14px; }
+  .document-note { font-size: 8.5pt; color: #64748b; margin-top: 10px !important; }
+  .document-footer { border-top: 1px solid #cbd5e1; padding-top: 14px; margin-top: 26px; font-size: 8pt; color: #64748b; break-inside: avoid; }
+  .document-footer strong { color: #163953; }
+  .document-metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin: 20px 0; break-inside: avoid; }
+  .document-metric { padding: 14px 12px; border: 1px solid #dce4ec; border-radius: 5px; background: #f8fafc; }
+  .document-metric span { display: block; font-size: 8pt; color: #64748b; margin-bottom: 5px; }
+  .document-metric strong { display: block; font-size: 13pt; line-height: 1.4; font-variant-numeric: tabular-nums; }
+  .document-empty { padding: 25px; border: 1px dashed #cbd5e1; text-align: center; color: #64748b; }
+  @media screen and (max-width: 600px) { .print-shell { margin: 0; padding: 20px 14px; } .document-header { gap: 14px; } .business-name { font-size: 17pt; } .document-heading h2 { font-size: 13pt; } .document-metrics { grid-template-columns: 1fr; } }
+  @media print { body { background: white; } .print-toolbar { display: none !important; } .print-shell { margin: 0; padding: 0; max-width: none; box-shadow: none; } h3 { break-after: avoid; } }
 `;

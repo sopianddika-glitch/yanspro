@@ -1,13 +1,15 @@
 
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Invoice, InvoiceItem, InvoiceStatus, Profile, Product } from '../types';
+import { Invoice, InvoiceItem, InvoiceStatus, Profile, Product, Client } from '../types';
 import { AddIcon, DeleteIcon, PrintIcon, CheckIcon } from '../components/Icons';
 import InvoicePDFTemplate from '../components/InvoicePDFTemplate';
 import ProductSelectorInput from '../components/ProductSelectorInput';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useI18n } from '../hooks/useI18n';
-import { PRINT_DOCUMENT_STYLES } from '../utils/printStyles';
+import { openPrintDocument } from '../utils/printDocument';
+import { documentText } from '../utils/documentText';
+import { validDateKey } from '../utils/reportData';
 
 interface InvoiceEditorPageProps {
     onSave: (invoice: Omit<Invoice, 'id' | 'profileId'> | Invoice) => void;
@@ -16,11 +18,12 @@ interface InvoiceEditorPageProps {
     currency: string;
     profile: Profile;
     products: Product[];
+    clients?: Client[];
     onDelete: (id: string) => void;
 }
 
-const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, existingInvoice, currency, profile, products, onDelete }) => {
-    const { t } = useI18n();
+const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, existingInvoice, currency, profile, products, clients = [], onDelete }) => {
+    const { t, locale } = useI18n();
     const [clientName, setClientName] = useState('');
     const [issueDate, setIssueDate] = useState('');
     const [dueDate, setDueDate] = useState('');
@@ -119,29 +122,20 @@ const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, e
     };
     
     const handleDownloadPdf = () => {
-        const invoiceDataForPdf = {
-            id: existingInvoice?.id || 'DRAFT-ID',
-            profileId: existingInvoice?.profileId || profile.id,
-            clientName, issueDate, dueDate, items: items.map(item => ({...item, id: Math.random().toString()})), notes, status
+        const text = documentText(locale);
+        if (!clientName.trim() || !validDateKey(issueDate) || !validDateKey(dueDate) || dueDate < issueDate || !items.length || items.some(item => !item.description.trim() || !Number.isFinite(item.quantity) || item.quantity <= 0 || !Number.isFinite(item.price) || item.price < 0) || !Number.isFinite(items.reduce((sum,item)=>sum+item.quantity*item.price,0))) {
+            setError(text.invalidInvoice); return;
+        }
+        const invoiceDataForPdf: Invoice = {
+            id: existingInvoice?.id || 'DRAFT', profileId: existingInvoice?.profileId || profile.id,
+            clientName, issueDate, dueDate, items: items.map((item,index) => ({...item,id:String(index)})), notes, status,
         };
-        const markup = renderToStaticMarkup(<InvoicePDFTemplate invoice={invoiceDataForPdf} profile={profile} currency={currency} />);
-        const printWindow = window.open('', '_blank');
-        printWindow?.document.write(`
-            <html>
-                <head>
-                    <title>Invoice #${invoiceDataForPdf.id.slice(-6)}</title>
-                    <style>${PRINT_DOCUMENT_STYLES}</style>
-                </head>
-                <body>
-                    <div class="print-shell">${markup}</div>
-                </body>
-            </html>
-        `);
-        printWindow?.document.close();
-        printWindow?.focus();
-        setTimeout(() => { printWindow?.print(); printWindow?.close(); }, 250);
-    }
-    
+        const changed = !existingInvoice || clientName !== existingInvoice.clientName || issueDate !== existingInvoice.issueDate || dueDate !== existingInvoice.dueDate || notes !== (existingInvoice.notes || '') || status !== existingInvoice.status || JSON.stringify(items) !== JSON.stringify(existingInvoice.items.map(({id: _id,...item})=>item));
+        const matches = clients.filter(client=>client.name===clientName);
+        const markup = renderToStaticMarkup(<InvoicePDFTemplate invoice={invoiceDataForPdf} profile={profile} currency={currency} locale={locale} client={matches.length===1?matches[0]:undefined} draft={changed}/>);
+        setError(openPrintDocument({title:`${profile.name} - ${text.invoice} - ${invoiceDataForPdf.id}`,markup,locale,reference:`INV-${invoiceDataForPdf.id}`}) ? '' : text.popupError);
+    };
+
     const total = items.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
     const pageTitle = existingInvoice 
@@ -160,7 +154,7 @@ const InvoiceEditorPage: React.FC<InvoiceEditorPageProps> = ({ onSave, onBack, e
                                  <DeleteIcon />
                              </button>
                          )}
-                         <button onClick={handleDownloadPdf} className="p-2 rounded-lg bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-800 dark:text-white font-semibold transition-colors" aria-label={t('reportsPage.print')}><PrintIcon/></button>
+                         <button onClick={handleDownloadPdf} className="inline-flex items-center p-2 rounded-lg bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-800 dark:text-white font-semibold transition-colors" aria-label={documentText(locale).export}><PrintIcon/><span className="ml-2 text-sm">{documentText(locale).export}</span></button>
                          <button onClick={handleSave} disabled={isPaidAndLocked} className="py-2 px-4 rounded-lg bg-brand-accent hover:bg-blue-600 text-white font-semibold transition-colors disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed">{t('invoiceEditor.save')}</button>
                     </div>
                 </div>

@@ -16,6 +16,10 @@ Built with React, TypeScript, Vite, and a local Tailwind/PostCSS pipeline, the p
 - **Multi-Profile Support:** Manage multiple business profiles with separate settings and data.
 - **Desktop Packaging:** Ship the app as an Electron desktop application when needed.
 
+## Professional PDF Documents
+
+Invoices, POS/transaction receipts, expense vouchers and six business report types now share a profile-branded A4 document format. Choose **Export PDF**, then **Save as PDF** in the browser print dialog. See [DOCUMENT_EXPORTS.md](./DOCUMENT_EXPORTS.md) for entry points, data boundaries, print settings and verification.
+
 ## Prerequisites
 
 Install [Node.js](https://nodejs.org/) 20 or newer so `npm` is available.
