@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Transaction, TransactionType, FinancialSummary, Page, Category, ReceiptAnalysisResult, RecurringTransaction, Frequency, Budget, Profile, Invoice, InvoiceStatus, Theme, SupportedLocale, Goal, Product, CartItem, ChatMessage, AiActionResponse, ProductType, Client, AppNotification, NotificationType, TransactionAudit, AuditAction } from './types';
-import Header from './components/Header';
+import AppLayout from './components/AppLayout';
 import AddTransactionModal from './components/AddTransactionModal';
 import ReceiptScannerModal from './components/ReceiptScannerModal';
 import Dashboard from './pages/Dashboard';
@@ -1069,12 +1069,9 @@ const App: React.FC = () => {
     return (
         <I18nProvider locale={locale}>
             <div className="app-shell flex bg-gray-100 font-sans dark:bg-brand-primary">
-                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-                    <Header currentPage={currentPage} onNavigate={handleNavigate} profiles={profiles} activeProfile={activeProfile} onSwitchProfile={handleSwitchProfile} onManageProfiles={() => handleNavigate('settings')} theme={theme} onSetTheme={handleSetTheme} />
-                    <main className={`app-main min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto ${currentPage === 'pos' ? 'app-main-pos' : ''}`}>
-                        {renderPage()}
-                    </main>
-                </div>
+                <AppLayout currentPage={currentPage} onNavigate={handleNavigate} profiles={profiles} activeProfile={activeProfile} onSwitchProfile={handleSwitchProfile} onManageProfiles={() => handleNavigate('settings')} theme={theme} onSetTheme={handleSetTheme}>
+                    {renderPage()}
+                </AppLayout>
                 <AddTransactionModal 
                     isOpen={isModalOpen} 
                     onClose={() => setIsModalOpen(false)} 

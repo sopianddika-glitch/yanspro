@@ -552,6 +552,14 @@
     "reports": "Reports",
     "clients": "Clients",
     "settings": "Settings",
+    "overviewGroup": "Overview",
+    "businessGroup": "Business",
+    "planningGroup": "Planning",
+    "workspace": "Business workspace",
+    "openMenu": "Open navigation",
+    "closeMenu": "Close navigation",
+    "collapseMenu": "Minimize sidebar",
+    "expandMenu": "Expand sidebar",
     "navigation": "Main navigation"
   }
 }

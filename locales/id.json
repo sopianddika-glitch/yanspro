@@ -552,6 +552,14 @@
     "reports": "Laporan",
     "clients": "Klien",
     "settings": "Pengaturan",
+    "overviewGroup": "Ringkasan",
+    "businessGroup": "Operasional",
+    "planningGroup": "Perencanaan",
+    "workspace": "Ruang kerja bisnis",
+    "openMenu": "Buka navigasi",
+    "closeMenu": "Tutup navigasi",
+    "collapseMenu": "Minimalkan sidebar",
+    "expandMenu": "Perluas sidebar",
     "navigation": "Navigasi utama"
   }
 }
